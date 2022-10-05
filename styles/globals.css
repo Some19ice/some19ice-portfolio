@@ -22,3 +22,16 @@ a {
   font-family: "burtons";
   src: url("../public/Burtons.otf");
 }
+@font-face {
+  font-family: "operatorMono";
+  src: url("../public/OperatorMono-BoldItalic.otf");
+}
+@font-face {
+  font-family: "operatorMonoBold";
+  src: url("../public/OperatorMono-Bold.otf");
+}
+@font-face {
+  font-family: "operatorMonoBook";
+  src: url("../public/OperatorMono-Book.otf");
+}
+
