@@ -9,6 +9,7 @@ module.exports = {
                 operatorMono: "operatorMono",
                 operatorMonoBold: "operatorMonoBold",
                 operatorMonoBook: "operatorMonoBook",
+                operatorMonoMedium: "operatorMonoMedium",
                 poppins: ["Poppins", "sans-serif"],
             },
         },

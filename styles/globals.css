@@ -34,4 +34,7 @@ a {
   font-family: "operatorMonoBook";
   src: url("../public/OperatorMono-Book.otf");
 }
-
+@font-face {
+  font-family: "operatorMonoMedium";
+  src: url("../public/OperatorMono-Medium.otf");
+}
