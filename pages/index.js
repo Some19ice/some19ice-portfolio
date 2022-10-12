@@ -27,7 +27,7 @@ export default function Home() {
             <main className="  bg-zinc-300 px-10 font-operatorMonoMedium dark:bg-zinc-900 md:px-20 lg:px-40">
                 <section className="min-h-screen">
                     <nav className="py-10 mb-12 flex justify-between dark:text-white">
-                        <h1 className="font-burtons text-xl">some19ice</h1>
+                        <h1 className="font-burtons text-2xl">some19ice</h1>
                         <ul className="flex items-center">
                             <li>
                                 <BsFillMoonStarsFill
@@ -43,6 +43,14 @@ export default function Home() {
                                     Resume
                                 </a>
                             </li>
+                            <li>
+                                <a
+                                    className="bg-gradient-to-r from-cyan-500 text- to-teal-500 text-white px-4 py-2 border-none rounded-md ml-8"
+                                    href="#"
+                                >
+                                    Fund Me
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                     <div className="text-center p-10 py-10">
@@ -52,9 +60,9 @@ export default function Home() {
                         <h3 className="text-2xl py-2 dark:text-white md:text-3xl">
                             Developer & Entrepreneur.
                         </h3>
-                        <p className="text-md py-5 leading-8 text-gray-800 dark:text-gray-200 max-w-xl mx-auto md:text-xl">
-                            Freelancer providing services for programming and design content needs.
-                            Join me down below and let's get cracking!
+                        <p className="text-md py-5 leading-8 text-gray-700 dark:text-gray-200 max-w-xl mx-auto md:text-xl">
+                            Full Stack developer who uses code to provide services for business
+                            needs. Join me! and lets build fantastic web2 & web3 apps together.
                         </p>
                         <div className="text-5xl flex justify-center gap-16 py-3 text-gray-600 dark:text-gray-400">
                             <a href="https://twitter.com/some19ice">
