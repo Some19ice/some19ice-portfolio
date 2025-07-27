@@ -12,7 +12,7 @@
     },
     "distDir": ".next",
     "cleanDistDir": true,
-    "assetPrefix": "",
+    "assetPrefix": "/some19ice-portfolio",
     "cacheMaxMemorySize": 52428800,
     "configOrigin": "next.config.js",
     "useFileSystemPublicRoutes": true,
@@ -46,7 +46,7 @@
         256,
         384
       ],
-      "path": "/_next/image",
+      "path": "/some19ice-portfolio/_next/image",
       "loader": "default",
       "loaderFile": "",
       "domains": [
@@ -72,9 +72,9 @@
       "pagesBufferLength": 5
     },
     "amp": {
-      "canonicalBase": ""
+      "canonicalBase": "/some19ice-portfolio"
     },
-    "basePath": "",
+    "basePath": "/some19ice-portfolio",
     "sassOptions": {},
     "trailingSlash": false,
     "i18n": null,

@@ -2,8 +2,16 @@
   "version": 3,
   "pages404": true,
   "caseSensitive": false,
-  "basePath": "",
+  "basePath": "/some19ice-portfolio",
   "redirects": [
+    {
+      "source": "/some19ice-portfolio/",
+      "destination": "/some19ice-portfolio",
+      "basePath": false,
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^/some19ice-portfolio/$"
+    },
     {
       "source": "/:path+/",
       "destination": "/:path+",
@@ -14,7 +22,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/some19ice-portfolio/(.*)",
       "headers": [
         {
           "key": "X-Frame-Options",
@@ -33,7 +41,7 @@
           "value": "1; mode=block"
         }
       ],
-      "regex": "^(?:/(.*))(?:/)?$"
+      "regex": "^/some19ice-portfolio(?:/(.*))(?:/)?$"
     }
   ],
   "rewrites": {
