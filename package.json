@@ -3,27 +3,30 @@
   "version": "0.1.0",
   "homepage": "https://some19ice.github.io/some19ice-portfolio",
   "private": true,
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "firebase": "^9.10.0",
-    "moment": "^2.29.4",
-    "next": "12.3.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^15.4.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-icons": "^4.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
-    "gh-pages": "^4.0.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8"
