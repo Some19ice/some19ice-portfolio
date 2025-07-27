@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "homepage": "https://some19ice.github.io/some19ice-portfolio",
   "private": true,
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
