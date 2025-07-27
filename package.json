@@ -4,16 +4,14 @@
   "homepage": "https://some19ice.github.io/some19ice-portfolio",
   "private": true,
   "scripts": {
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "firebase": "^9.10.0",
-    "moment": "^2.29.4",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
