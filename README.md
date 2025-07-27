@@ -1,8 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio - Yakubu T. Umar
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases the work and services of Yakubu T. Umar, a Full Stack Developer and Entrepreneur specializing in React, Node.js, and Web3 technologies.
 
-First, run the development server:
+## ✨ Features
+
+- **Modern Stack**: Built with Next.js 15, React 19, and Tailwind CSS
+- **Stunning Visual Design**: Clean, modern interface with gradient accents and smooth animations
+- **Fixed Navigation**: Glassmorphism navigation bar with backdrop blur effects
+- **Hero Section**: Split-screen layout with animated floating elements and gradient borders
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Dark Mode**: Seamless toggle between light and dark themes
+- **Interactive Cards**: Hover effects with transforms, shadows, and color transitions
+- **Portfolio Showcase**: Grid layout with image overlays and action buttons on hover
+- **Services Section**: Modern card design with gradient icons and tool tags
+- **Contact Integration**: Professional contact section with social media integration
+- **Smooth Scrolling**: Enhanced UX with smooth scroll behavior
+- **Performance Optimized**: Fast loading with optimized images and fonts
+- **Security Headers**: Enhanced security with proper HTTP headers
+- **SEO Optimized**: Comprehensive meta tags and Open Graph support
+
+## 🚀 Getting Started
+
+First, install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -12,23 +39,114 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```
+├── components/          # Reusable React components
+│   ├── ContactSection.js
+│   ├── PortfolioIntro.js
+│   ├── ProjectCard.js
+│   └── ServiceCard.js
+├── data/               # Data files
+│   └── portfolio.js    # Portfolio projects data
+├── pages/              # Next.js pages
+│   ├── _app.js
+│   ├── _document.js
+│   ├── index.js        # Main homepage
+│   └── api/
+├── public/             # Static assets
+├── styles/             # CSS styles
+│   └── globals.css
+├── config.js           # Configuration file
+└── next.config.js      # Next.js configuration
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 🛠️ Technologies Used
 
-## Learn More
+- **Frontend**: Next.js 15, React 19, Tailwind CSS
+- **Icons**: React Icons
+- **Fonts**: Custom fonts (Burtons, Operator Mono)
+- **Deployment**: GitHub Pages compatible
+- **Linting**: ESLint with Next.js config and accessibility rules
+- **Code Formatting**: Prettier
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run deploy` - Deploy to GitHub Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🎨 Customization
 
-## Deploy on Vercel
+### Adding New Projects
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Edit `data/portfolio.js` to add new projects:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```javascript
+{
+    id: 7,
+    title: "Your Project Name",
+    description: "Project description...",
+    image: "/your-image.png",
+    technologies: ["React", "Node.js"],
+    demoUrl: "https://your-demo.com",
+    codeUrl: "https://github.com/your-repo",
+    category: "Web App"
+}
+```
+
+### Updating Configuration
+
+Edit `config.js` to update social media links and other settings:
+
+```javascript
+const config = {
+    socialMedia: {
+        twitter: "https://twitter.com/yourusername",
+        linkedin: "https://linkedin.com/in/yourusername",
+        github: "https://github.com/yourusername",
+    },
+    resumeUrl: "your-resume-url",
+    fundMeUrl: "your-funding-url"
+}
+```
+
+## 🔧 Recent Improvements
+
+- ✅ Updated to Next.js 15 and React 19
+- ✅ Fixed all ESLint warnings and errors
+- ✅ Added comprehensive portfolio projects section
+- ✅ Implemented contact section with social links
+- ✅ Added security headers and performance optimizations
+- ✅ Fixed deprecated Image component usage
+- ✅ Enhanced SEO and accessibility
+- ✅ Resolved all security vulnerabilities
+
+## 🌐 Deployment
+
+### GitHub Pages
+
+```bash
+npm run deploy
+```
+
+### Vercel (Recommended)
+
+Deploy easily on [Vercel Platform](https://vercel.com/new) - the platform made by the creators of Next.js.
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](../../issues).
+
+## 📧 Contact
+
+- **Email**: some19ice@example.com
+- **LinkedIn**: [some19ice](https://linkedin.com/in/some19ice)
+- **Twitter**: [@some19ice](https://twitter.com/some19ice)
+- **GitHub**: [some19ice](https://github.com/some19ice)
