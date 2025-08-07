@@ -8,14 +8,15 @@
     "npm": ">=9.0.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "predeploy": "next build",
+    "deploy": "gh-pages -d out",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "framer-motion": "^12.23.9",
     "next": "^15.4.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
