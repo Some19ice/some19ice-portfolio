@@ -11,7 +11,6 @@ const nextConfig = {
         domains: ["localhost", "some19ice.github.io", "opengraph.githubassets.com"],
         // Use unoptimized images for static export
         unoptimized: true,
-        formats: ["image/webp", "image/avif"],
     },
 }
 
