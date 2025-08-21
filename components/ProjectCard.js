@@ -2,57 +2,95 @@ import Image from "next/image";
 import { AiFillGithub } from "react-icons/ai";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 const ProjectCard = ({ project }) => {
     const [isHovered, setIsHovered] = useState(false)
     const [isDemoHovered, setIsDemoHovered] = useState(false)
     const [isCodeHovered, setIsCodeHovered] = useState(false)
 
+    // Get category color
+    const getCategoryColor = (category) => {
+        const colors = {
+            "Full Stack": "bg-primary/10 text-primary border-primary/20",
+            "Web App": "bg-secondary/10 text-secondary border-secondary/20",
+            Web3: "bg-accent/10 text-accent border-accent/20",
+            Website: "bg-chart-4/10 text-chart-4 border-chart-4/20",
+            Mobile: "bg-chart-3/10 text-chart-3 border-chart-3/20",
+            default: "bg-muted/50 text-muted-foreground border-border",
+        }
+        return colors[category] || colors.default
+    }
+
     return (
-        <div
-            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700 overflow-hidden"
+        <Card
+            className="group bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 overflow-hidden"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            {/* Header */}
+            <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                    <Badge
+                        variant="outline"
+                        className={`text-xs ${getCategoryColor(project.category)}`}
+                    >
+                        {project.category || "Project"}
+                    </Badge>
+                    <div className="flex items-center gap-2">
+                        {project.demoUrl && project.demoUrl !== "#" && (
+                            <div
+                                className="w-2 h-2 bg-secondary rounded-full"
+                                title="Live Demo Available"
+                            ></div>
+                        )}
+                        {project.codeUrl && project.codeUrl !== "#" && (
+                            <div
+                                className="w-2 h-2 bg-sky-500 rounded-full"
+                                title="Source Code Available"
+                            ></div>
+                        )}
+                    </div>
+                </div>
+                <CardTitle className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {project.title}
+                </CardTitle>
+            </CardHeader>
+
             {/* Image */}
-            <div className="relative h-48 w-full overflow-hidden">
+            <div className="relative h-40 w-full overflow-hidden mx-4 rounded-lg mb-4">
                 <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className={`object-cover transition-all duration-500 ease-out ${
-                        isHovered ? "scale-110" : "scale-100"
+                    className={`object-cover transition-all duration-500 ease-out rounded-lg ${
+                        isHovered ? "scale-105" : "scale-100"
                     }`}
                 />
                 {/* Overlay */}
                 <div
-                    className={`absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-all duration-300 ${
-                        isHovered ? "opacity-100" : "opacity-0"
+                    className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-300 rounded-lg ${
+                        isHovered ? "opacity-100" : "opacity-60"
                     }`}
                 />
 
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4 transition-transform duration-300 hover:scale-105">
-                    <span className="bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm shadow-sm">
-                        {project.category}
-                    </span>
-                </div>
-
-                {/* Action buttons on hover */}
-                <div className="absolute bottom-4 right-4 flex space-x-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                {/* Action buttons */}
+                <div className="absolute bottom-3 right-3 flex space-x-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300">
                     {project.demoUrl && project.demoUrl !== "#" && (
                         <a
                             href={project.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-white/90 dark:bg-gray-900/90 rounded-full text-gray-900 dark:text-white hover:bg-teal-500 hover:text-white transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+                            className="p-2 bg-background/90 rounded-lg text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                             onMouseEnter={() => setIsDemoHovered(true)}
                             onMouseLeave={() => setIsDemoHovered(false)}
+                            title="View Live Demo"
                         >
                             <BsBoxArrowUpRight
                                 className={`text-sm transition-all duration-200 ${
-                                    isDemoHovered ? "scale-125 rotate-12" : "scale-100"
+                                    isDemoHovered ? "scale-110" : "scale-100"
                                 }`}
                             />
                         </a>
@@ -63,13 +101,14 @@ const ProjectCard = ({ project }) => {
                             href={project.codeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-white/90 dark:bg-gray-900/90 rounded-full text-gray-900 dark:text-white hover:bg-gray-700 hover:text-white transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+                            className="p-2 bg-background/90 rounded-lg text-foreground hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                             onMouseEnter={() => setIsCodeHovered(true)}
                             onMouseLeave={() => setIsCodeHovered(false)}
+                            title="View Source Code"
                         >
                             <AiFillGithub
                                 className={`text-sm transition-all duration-200 ${
-                                    isCodeHovered ? "scale-125 -rotate-12" : "scale-100"
+                                    isCodeHovered ? "scale-110" : "scale-100"
                                 }`}
                             />
                         </a>
@@ -78,34 +117,73 @@ const ProjectCard = ({ project }) => {
             </div>
 
             {/* Content */}
-            <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 transition-all duration-300 transform group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:translate-x-1">
-                    {project.title}
-                </h3>
-
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2 leading-relaxed">
+            <CardContent className="px-4 pb-4">
+                <p className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed">
                     {project.description}
                 </p>
 
                 {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map((tech, index) => (
-                        <span
-                            key={index}
-                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs font-medium hover:bg-teal-100 dark:hover:bg-teal-900/30 hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-300 cursor-default transform hover:scale-105 hover:shadow-sm"
-                        >
-                            {tech}
-                        </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                        <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full text-xs font-medium cursor-default transform hover:scale-105 transition-all duration-300">
-                            +{project.technologies.length - 3}
-                        </span>
-                    )}
+                <div className="space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                        {project.technologies.slice(0, 4).map((tech, index) => (
+                            <Badge
+                                key={index}
+                                variant="outline"
+                                className="text-xs bg-muted/50 hover:bg-muted transition-all duration-300 cursor-default"
+                            >
+                                {tech}
+                            </Badge>
+                        ))}
+                        {project.technologies.length > 4 && (
+                            <Badge variant="outline" className="text-xs bg-muted/30">
+                                +{project.technologies.length - 4}
+                            </Badge>
+                        )}
+                    </div>
+
+                    {/* Action Links */}
+                    <div className="flex items-center justify-between pt-2 border-t border-border/50">
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                            {project.demoUrl && project.demoUrl !== "#" && (
+                                <span className="flex items-center gap-1">
+                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                                    Live
+                                </span>
+                            )}
+                            {project.codeUrl && project.codeUrl !== "#" && (
+                                <span className="flex items-center gap-1">
+                                    <div className="w-1.5 h-1.5 bg-sky-500 rounded-full"></div>
+                                    Open Source
+                                </span>
+                            )}
+                        </div>
+                        <div className="flex items-center gap-2">
+                            {project.demoUrl && project.demoUrl !== "#" && (
+                                <a
+                                    href={project.demoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs text-primary hover:text-primary/80 transition-colors"
+                                >
+                                    View Demo
+                                </a>
+                            )}
+                            {project.codeUrl && project.codeUrl !== "#" && (
+                                <a
+                                    href={project.codeUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs text-secondary hover:text-secondary/80 transition-colors"
+                                >
+                                    View Code
+                                </a>
+                            )}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     )
 }
 
-export default ProjectCard;
+export default ProjectCard

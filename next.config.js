@@ -8,7 +8,7 @@ const nextConfig = {
     basePath: isProd ? "/some19ice-portfolio" : "",
     assetPrefix: isProd ? "/some19ice-portfolio/" : undefined,
     images: {
-        domains: ["localhost", "some19ice.github.io"],
+        domains: ["localhost", "some19ice.github.io", "opengraph.githubassets.com"],
         // Use unoptimized images for static export
         unoptimized: true,
         formats: ["image/webp", "image/avif"],
