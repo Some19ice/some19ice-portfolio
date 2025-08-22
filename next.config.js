@@ -5,29 +5,21 @@ const nextConfig = {
     // React configuration
     reactStrictMode: true,
 
-    // Enable static export for GitHub Pages
-    output: "export",
-
-    // Base path for GitHub Pages (only in production)
-    basePath: isProd ? "/some19ice-portfolio" : "",
-
-    // Add trailing slash to fix routing issues
-    trailingSlash: true,
-
     // Performance optimizations (swcMinify is enabled by default in Next.js 13+)
 
-    // Image optimization for static export
+    // Image optimization for Vercel deployment
     images: {
-        domains: ["localhost", "some19ice.github.io", "opengraph.githubassets.com"],
-        unoptimized: true, // Required for static export
-        formats: ['image/webp', 'image/avif'],
+        domains: ["localhost", "opengraph.githubassets.com"],
+        formats: ["image/webp", "image/avif"],
     },
 
     // Compiler optimizations
     compiler: {
-        removeConsole: isProd ? {
-            exclude: ['error']
-        } : false,
+        removeConsole: isProd
+            ? {
+                  exclude: ["error"],
+              }
+            : false,
     },
 
     // Production optimizations
