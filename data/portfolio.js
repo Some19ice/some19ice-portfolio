@@ -5,8 +5,8 @@ const portfolioProjects = [
         description: "A full-stack e-commerce solution built with Next.js, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
         image: "/web1.png",
         technologies: ["React", "Next.js", "Node.js", "MongoDB", "Stripe"],
-        demoUrl: "#",
-        codeUrl: "#",
+        demoUrl: "https://some19ice.github.io/demo/ecommerce",
+        codeUrl: "https://github.com/some19ice/ecommerce-platform",
         category: "Full Stack"
     },
     {
@@ -15,8 +15,8 @@ const portfolioProjects = [
         description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
         image: "/web2.png",
         technologies: ["React", "Express", "Socket.io", "PostgreSQL"],
-        demoUrl: "#",
-        codeUrl: "#",
+        demoUrl: "https://some19ice.github.io/demo/task-manager",
+        codeUrl: "https://github.com/some19ice/task-management-app",
         category: "Web App"
     },
     {
@@ -25,8 +25,8 @@ const portfolioProjects = [
         description: "A responsive dashboard for tracking cryptocurrency prices, portfolio management, and market analysis with real-time data.",
         image: "/web3.png",
         technologies: ["React", "D3.js", "Web3", "Solidity"],
-        demoUrl: "#",
-        codeUrl: "#",
+        demoUrl: "https://some19ice.github.io/demo/crypto-dashboard",
+        codeUrl: "https://github.com/some19ice/crypto-dashboard",
         category: "Web3"
     },
     {
@@ -35,8 +35,8 @@ const portfolioProjects = [
         description: "Modern restaurant website with online ordering system, reservation management, and responsive design for mobile devices.",
         image: "/web4.png",
         technologies: ["Next.js", "Tailwind", "Sanity CMS"],
-        demoUrl: "#",
-        codeUrl: "#",
+        demoUrl: "https://some19ice.github.io/demo/restaurant",
+        codeUrl: "https://github.com/some19ice/restaurant-website",
         category: "Website"
     },
     {
@@ -45,8 +45,8 @@ const portfolioProjects = [
         description: "Educational platform with course management, video streaming, progress tracking, and interactive quizzes for students and instructors.",
         image: "/web5.png",
         technologies: ["React", "Node.js", "MongoDB", "AWS"],
-        demoUrl: "#",
-        codeUrl: "#",
+        demoUrl: "https://some19ice.github.io/demo/lms",
+        codeUrl: "https://github.com/some19ice/learning-management-system",
         category: "Full Stack"
     },
     {
@@ -55,8 +55,8 @@ const portfolioProjects = [
         description: "Beautiful weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
         image: "/web6.png",
         technologies: ["React", "OpenWeather API", "Chart.js"],
-        demoUrl: "#",
-        codeUrl: "#",
+        demoUrl: "https://some19ice.github.io/demo/weather-app",
+        codeUrl: "https://github.com/some19ice/weather-app",
         category: "Web App"
     }
 ];
