@@ -175,7 +175,7 @@ export function CircuitLines({ count = 15, color = "hsl(var(--secondary))" }) {
             const segments = Math.floor(Math.random() * 3) + 2
             let currentX = startX
             let currentY = startY
-            let currentZ = startZ
+            const currentZ = startZ
 
             points.push([currentX, currentY, currentZ])
 
