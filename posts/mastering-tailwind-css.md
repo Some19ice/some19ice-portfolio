@@ -2,7 +2,7 @@
 title: "Mastering Tailwind CSS"
 date: "2025-09-01"
 excerpt: "A comprehensive guide to building beautiful, maintainable, and highly performant user interfaces with Tailwind CSS. Learn advanced patterns, optimization techniques, and best practices."
-coverImage: "/blog/tailwind-css.jpg"
+coverImage: "/blog/tailwind-css.svg"
 readTime: "12 min read"
 tags: ["CSS", "Tailwind", "Design", "Frontend", "Performance"]
 ---

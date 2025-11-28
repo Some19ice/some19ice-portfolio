@@ -2,7 +2,7 @@
 title: "The Future of Web3 Development"
 date: "2025-10-15"
 excerpt: "A deep dive into the emerging trends shaping the next generation of the internet, from Account Abstraction and ZK-Rollups to Modular Blockchains and AI integration."
-coverImage: "/blog/web3-future.jpg"
+coverImage: "/blog/web3-future.svg"
 readTime: "10 min read"
 tags: ["Web3", "Blockchain", "Ethereum", "ZK-Rollups", "Account Abstraction"]
 ---

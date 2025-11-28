@@ -3,7 +3,7 @@ title: "Getting Started with Next.js 16: A Complete Guide"
 date: "2025-11-23"
 author: "Yakubu T. Umar"
 excerpt: "Explore the latest features in Next.js 16, learn how to upgrade from previous versions, and discover what makes this release a game-changer for React developers."
-coverImage: "/blog/nextjs-16.jpg"
+coverImage: "/blog/nextjs-16.svg"
 tags: ["Next.js", "React", "Web Development", "JavaScript", "Turbopack"]
 ---
 

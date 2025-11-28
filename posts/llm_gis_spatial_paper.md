@@ -2,7 +2,7 @@
 title: "Training Large Language Models with GIS Vector Data and Satellite Imagery"
 date: "2025-10-20"
 excerpt: "A comprehensive exploration of methodologies for training spatially-aware LLMs to process satellite imagery and GIS data for agricultural applications, bridging the gap between remote sensing and natural language interfaces."
-coverImage: "/blog/llm-gis-spatial.jpg"
+coverImage: "/blog/llm-gis-spatial.svg"
 readTime: "25 min read"
 tags: ["AI", "Machine Learning", "GIS", "Satellite Imagery", "Agriculture", "Research", "LLM", "Computer Vision"]
 ---
