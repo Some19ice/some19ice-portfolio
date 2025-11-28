@@ -2,6 +2,7 @@
 title: "Meet Navi: Building an Animated Mascot for Campus Navigation"
 date: "2025-10-25"
 excerpt: "How we brought personality to NasrdaNavi through GSAP animations and thoughtful UX design."
+coverImage: "/blog/navi-mascot.jpg"
 readTime: "8 min read"
 tags: ["GSAP", "Animation", "UX Design", "JavaScript", "Frontend", "Case Study"]
 ---
