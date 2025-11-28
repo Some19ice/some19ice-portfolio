@@ -9,6 +9,7 @@ const nextConfig = {
 
     // Image optimization for Vercel deployment
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: "http",
@@ -21,6 +22,9 @@ const nextConfig = {
         ],
         formats: ["image/webp", "image/avif"],
     },
+
+    // Static export configuration for GitHub Pages
+    output: 'export',
 
     // Compiler optimizations
     compiler: {
