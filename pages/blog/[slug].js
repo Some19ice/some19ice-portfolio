@@ -34,7 +34,7 @@ export default function BlogPost({ post }) {
 
         <header className="mb-8">
           <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.map(tag => (
+            {post.tags?.map(tag => (
               <Badge key={tag} variant="secondary">
                 {tag}
               </Badge>

@@ -29,7 +29,7 @@ export default function BlogIndex({ posts }) {
           {posts.map((post) => (
             <article key={post.slug} className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-shadow">
               <div className="flex flex-wrap gap-2 mb-4">
-                {post.tags.map(tag => (
+                {post.tags?.map(tag => (
                   <Badge key={tag} variant="secondary" className="text-xs">
                     {tag}
                   </Badge>
