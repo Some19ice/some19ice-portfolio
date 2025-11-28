@@ -31,4 +31,7 @@ function Badge({
   return (<div className={cn(badgeVariants({ variant }), className)} {...props} />);
 }
 
-export { Badge, badgeVariants }
+/** @typedef {import("class-variance-authority").VariantProps<typeof badgeVariants>} BadgeProps */
+/** @type {React.FC<React.HTMLAttributes<HTMLDivElement> & BadgeProps>} */
+const BadgeTyped = Badge
+export { BadgeTyped as Badge, badgeVariants }

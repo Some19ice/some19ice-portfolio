@@ -1,5 +1,17 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+/**
+ * @param {Object} props
+ * @param {string} [props.title]
+ * @param {string} [props.description]
+ * @param {string|number} [props.value]
+ * @param {string} [props.change]
+ * @param {"positive"|"negative"|"neutral"} [props.changeType]
+ * @param {React.ReactNode} [props.icon]
+ * @param {React.ReactNode} [props.children]
+ * @param {string} [props.className]
+ * @param {"sm"|"default"|"lg"} [props.size]
+ */
 const DashboardCard = ({
     title,
     description,

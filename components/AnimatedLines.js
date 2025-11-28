@@ -132,7 +132,7 @@ export function AnimatedGrid({
     color = "hsl(var(--primary))",
     opacity = 0.15,
 }) {
-    const gridRef = useRef()
+    const gridRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
 
     useFrame((state) => {
@@ -155,7 +155,7 @@ export function AnimatedGrid({
 
 // Circuit Board Lines Component
 export function CircuitLines({ count = 15, color = "hsl(var(--secondary))" }) {
-    const linesRef = useRef()
+    const linesRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
 
     const linePoints = useMemo(() => {
@@ -210,7 +210,7 @@ export function CircuitLines({ count = 15, color = "hsl(var(--secondary))" }) {
     return (
         <group ref={linesRef}>
             {linePoints.map((points, index) => (
-                <Line key={index} points={points} color={resolvedColor} lineWidth={2} transparent />
+                <Line key={index} points={/** @type {any} */ (points)} color={resolvedColor} lineWidth={2} transparent />
             ))}
         </group>
     )
@@ -218,7 +218,7 @@ export function CircuitLines({ count = 15, color = "hsl(var(--secondary))" }) {
 
 // Flowing Data Lines Component
 export function FlowingLines({ count = 8, color = "hsl(var(--accent))" }) {
-    const groupRef = useRef()
+    const groupRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
 
     const lines = useMemo(() => {
@@ -257,7 +257,7 @@ export function FlowingLines({ count = 8, color = "hsl(var(--accent))" }) {
     return (
         <group ref={groupRef}>
             {lines.map((line, index) => (
-                <Line key={index} points={line.points} color={resolvedColor} lineWidth={1.5} transparent />
+                <Line key={index} points={/** @type {any} */ (line.points)} color={resolvedColor} lineWidth={1.5} transparent />
             ))}
         </group>
     )
@@ -270,7 +270,7 @@ export function NeonBorderLines({
     color = "hsl(var(--primary))",
     glowIntensity = 1,
 }) {
-    const borderRef = useRef()
+    const borderRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
 
     const borderPoints = useMemo(
@@ -315,7 +315,7 @@ export function NeonBorderLines({
     return (
         <group ref={borderRef}>
             {borderPoints.map((points, index) => (
-                <Line key={index} points={points} color={resolvedColor} lineWidth={3} transparent />
+                <Line key={index} points={/** @type {any} */ (points)} color={resolvedColor} lineWidth={3} transparent />
             ))}
         </group>
     )
@@ -323,8 +323,8 @@ export function NeonBorderLines({
 
 // Radar Sweep Lines Component
 export function RadarSweep({ radius = 5, color = "hsl(var(--secondary))", sweepSpeed = 1 }) {
-    const radarRef = useRef()
-    const sweepRef = useRef()
+    const radarRef = useRef(null)
+    const sweepRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
 
     const circlePoints = useMemo(() => {
@@ -372,15 +372,15 @@ export function RadarSweep({ radius = 5, color = "hsl(var(--secondary))", sweepS
     return (
         <group ref={radarRef}>
             {/* Radar circles */}
-            <Line points={circlePoints} color={resolvedColor} lineWidth={2} transparent />
+            <Line points={/** @type {any} */ (circlePoints)} color={resolvedColor} lineWidth={2} transparent />
             <Line
-                points={circlePoints.map(([x, y, z]) => [x * 0.6, y * 0.6, z])}
+                points={/** @type {any} */ (circlePoints.map(([x, y, z]) => [x * 0.6, y * 0.6, z]))}
                 color={resolvedColor}
                 lineWidth={1.5}
                 transparent
             />
             <Line
-                points={circlePoints.map(([x, y, z]) => [x * 0.3, y * 0.3, z])}
+                points={/** @type {any} */ (circlePoints.map(([x, y, z]) => [x * 0.3, y * 0.3, z]))}
                 color={resolvedColor}
                 lineWidth={1}
                 transparent
@@ -388,16 +388,16 @@ export function RadarSweep({ radius = 5, color = "hsl(var(--secondary))", sweepS
 
             {/* Crosshairs */}
             {crossHairs.map((points, index) => (
-                <Line key={index} points={points} color={resolvedColor} lineWidth={1} transparent />
+                <Line key={index} points={/** @type {any} */ (points)} color={resolvedColor} lineWidth={1} transparent />
             ))}
 
             {/* Sweep line */}
             <group ref={sweepRef}>
                 <Line
-                    points={[
+                    points={/** @type {any} */ ([
                         [0, 0, 0],
                         [radius, 0, 0],
-                    ]}
+                    ])}
                     color={resolvedColor}
                     lineWidth={3}
                     transparent
@@ -409,7 +409,7 @@ export function RadarSweep({ radius = 5, color = "hsl(var(--secondary))", sweepS
 
 // Connection Lines Component (connects UI elements)
 export function ConnectionLines({ points = [], color = "hsl(var(--primary))", animated = true }) {
-    const linesRef = useRef()
+    const linesRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
 
     const connectionPaths = useMemo(() => {
@@ -451,11 +451,10 @@ export function ConnectionLines({ points = [], color = "hsl(var(--primary))", an
             {connectionPaths.map((path, index) => (
                 <Line
                     key={index}
-                    points={path}
+                    points={/** @type {any} */ (path)}
                     color={resolvedColor}
                     lineWidth={2}
                     transparent
-                    curveType="bezier"
                 />
             ))}
         </group>

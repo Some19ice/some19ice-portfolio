@@ -96,11 +96,12 @@ export async function getStaticProps() {
     return {
       slug: filename.replace(/\.md$/, ''),
       readTime: data.readTime || calculateReadTime(content),
+      date: data.date,
       ...data,
     }
   })
 
-  posts.sort((a, b) => (a.date > b.date ? -1 : 1))
+  posts.sort((/** @type {{ date: string | number | Date; }} */ a, /** @type {{ date: string | number | Date; }} */ b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
 
   return { props: { posts } }
 }
