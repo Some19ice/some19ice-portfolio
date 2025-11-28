@@ -1,7 +1,6 @@
-import React, { useRef, useMemo, useEffect, useState } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Line, Text } from "@react-three/drei"
-import * as THREE from "three"
+import { useRef, useMemo, useEffect, useState } from "react"
+import { useFrame } from "@react-three/fiber"
+import { Line } from "@react-three/drei"
 
 // Direct theme colors - no CSS variable resolution needed
 const themeColors = {
@@ -57,16 +56,9 @@ const hslToHex = (hsl) => {
 const getCurrentTheme = () => {
     if (typeof window === "undefined") return 'light'
 
-    // Check localStorage first
-    const stored = localStorage.getItem('darkMode')
-    if (stored !== null) {
-        return stored === 'true' ? 'dark' : 'light'
-    }
-
     // Check DOM for dark class
     const hasDarkClass = document.documentElement.classList.contains('dark') ||
-                        document.body.classList.contains('dark') ||
-                        document.querySelector('.dark') !== null
+                        document.body.classList.contains('dark')
 
     return hasDarkClass ? 'dark' : 'light'
 }
@@ -98,34 +90,37 @@ const useResolvedColor = (cssColor) => {
     const [resolvedColor, setResolvedColor] = useState(() => getThemeColor(cssColor))
 
     useEffect(() => {
-        // Update color when theme might have changed
         const updateColor = () => {
             const newColor = getThemeColor(cssColor)
-            if (newColor !== resolvedColor) {
-                setResolvedColor(newColor)
-                if (process.env.NODE_ENV === 'development') {
-                    console.log(`Color updated: ${cssColor} -> ${newColor} (theme: ${getCurrentTheme()})`)
+            setResolvedColor(newColor)
+        }
+
+        // Initial check
+        updateColor()
+
+        // Use MutationObserver to watch for class changes on html element
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    updateColor()
                 }
-            }
+            })
+        })
+
+        if (typeof document !== 'undefined') {
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['class']
+            })
+            // Also watch body just in case
+            observer.observe(document.body, {
+                attributes: true,
+                attributeFilter: ['class']
+            })
         }
 
-        // Check for theme changes
-        const intervalId = setInterval(updateColor, 1000)
-
-        // Listen for storage changes
-        const handleStorageChange = (e) => {
-            if (e.key === 'darkMode') {
-                setTimeout(updateColor, 50)
-            }
-        }
-
-        window.addEventListener('storage', handleStorageChange)
-
-        return () => {
-            clearInterval(intervalId)
-            window.removeEventListener('storage', handleStorageChange)
-        }
-    }, [cssColor, resolvedColor])
+        return () => observer.disconnect()
+    }, [cssColor])
 
     return resolvedColor
 }
@@ -306,7 +301,6 @@ export function NeonBorderLines({
 
     useFrame((state) => {
         if (borderRef.current) {
-            const glow = glowIntensity + Math.sin(state.clock.elapsedTime * 3) * 0.3
             borderRef.current.children.forEach((line, index) => {
                 const offset = index * 0.25
                 // Safety check to ensure line has material before setting opacity
@@ -465,23 +459,6 @@ export function ConnectionLines({ points = [], color = "hsl(var(--primary))", an
                 />
             ))}
         </group>
-    )
-}
-
-// Main Lines Canvas Wrapper
-export function LinesCanvas({
-    children,
-    className = "",
-    camera = { position: [0, 0, 10], fov: 75 },
-    ...props
-}) {
-    return (
-        <div className={`absolute inset-0 pointer-events-none ${className}`}>
-            <Canvas camera={camera} dpr={[1, 2]} {...props}>
-                <ambientLight intensity={0.2} />
-                {children}
-            </Canvas>
-        </div>
     )
 }
 

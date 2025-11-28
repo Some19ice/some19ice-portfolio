@@ -197,3 +197,115 @@ a {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom prose styles for blog content */
+.prose {
+  --tw-prose-body: hsl(var(--foreground));
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: hsl(var(--primary));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-code: hsl(var(--accent));
+  --tw-prose-pre-bg: hsl(192.2222 100.0000% 10.5882%);
+  --tw-prose-pre-code: hsl(180 6.9307% 60.3922%);
+}
+
+.dark .prose {
+  --tw-prose-body: hsl(var(--foreground));
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: hsl(var(--primary));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-code: hsl(var(--accent));
+  --tw-prose-pre-bg: hsl(192.2222 100.0000% 10.5882%);
+  --tw-prose-pre-code: hsl(180 6.9307% 60.3922%);
+}
+
+/* Code block styling */
+.prose pre {
+  @apply rounded-lg border border-border shadow-md my-6 overflow-x-auto;
+  background-color: hsl(192.2222 100.0000% 10.5882%) !important;
+  padding: 1.5rem !important;
+}
+
+.prose code {
+  @apply text-sm;
+  font-family: 'Operator Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+.prose pre code {
+  @apply block;
+  background-color: transparent !important;
+  padding: 0 !important;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.prose :not(pre) > code {
+  @apply px-1.5 py-0.5 rounded text-accent border;
+  background-color: hsl(var(--accent) / 0.1);
+  border-color: hsl(var(--accent) / 0.2);
+  font-size: 0.875em;
+}
+
+/* Improve list styling in code blocks */
+.prose ul, .prose ol {
+  @apply my-4;
+}
+
+.prose li {
+  @apply my-2;
+}
+
+/* Improve blockquote styling */
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-6 text-muted-foreground;
+}
+
+/* Improve table styling */
+.prose table {
+  @apply w-full border-collapse my-6;
+}
+
+.prose th {
+  @apply bg-muted px-4 py-2 text-left border border-border font-semibold;
+}
+
+.prose td {
+  @apply px-4 py-2 border border-border;
+}
+
+/* Improve heading spacing */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply mt-8 mb-4 font-bold;
+}
+
+.prose h1 {
+  @apply text-4xl;
+}
+
+.prose h2 {
+  @apply text-3xl border-b border-border pb-2;
+}
+
+.prose h3 {
+  @apply text-2xl;
+}
+
+.prose h4 {
+  @apply text-xl;
+}
+
+/* Improve link styling */
+.prose a {
+  @apply text-primary hover:underline transition-all;
+}
+
+/* Improve paragraph spacing */
+.prose p {
+  @apply my-4 leading-relaxed;
+}
+
+/* Horizontal rule styling */
+.prose hr {
+  @apply my-8 border-border;
+}
+

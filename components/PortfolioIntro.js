@@ -3,15 +3,10 @@ const PortfolioIntro = ({ additionalText }) => {
     return (
         <div>
             <p className="text-md py-2 leading-8 text-foreground">
-                Since the beginning of my journey as a freelance designer and developer, I&apos;ve
-                done remote work for
-                <span className="text-primary"> agencies </span>
-                consulted for <span className="text-primary">startups </span>
-                and collaborated with talented people to create digital products for both business
-                and consumer use.
+                As a Senior Scientific Officer and Director, I specialize in building national-scale data portals and immersive 3D navigation systems. I don't just build apps; I engineer complex geospatial solutions that drive efficiency and innovation. My experience spans leading technical teams, optimizing critical infrastructure, and delivering high-impact software for government and enterprise sectors.
             </p>
             <p className="text-md py-2 leading-8 text-foreground">
-                I offer a wide range of services, including brand design, programming and teaching.
+                I offer a wide range of services, including Geospatial Information Systems (GIS), full-stack development, and technical leadership.
             </p>
             {additionalText && (
                 <p className="text-md py-2 leading-8 text-foreground">{additionalText}</p>

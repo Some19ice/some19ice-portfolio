@@ -1,10 +1,10 @@
 # Portfolio - Yakubu T. Umar
 
-A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases the work and services of Yakubu T. Umar, a Full Stack Developer and Entrepreneur specializing in React, Node.js, and Web3 technologies.
+A modern, responsive portfolio website built with Next.js 16, React 19, and Tailwind CSS. This portfolio showcases the work and services of Yakubu T. Umar, a Full Stack Developer and Entrepreneur specializing in React, Node.js, and Web3 technologies.
 
 ## ✨ Features
 
-- **Modern Stack**: Built with Next.js 15, React 19, and Tailwind CSS
+- **Modern Stack**: Built with Next.js 16, React 19, and Tailwind CSS
 - **Stunning Visual Design**: Clean, modern interface with gradient accents and smooth animations
 - **Fixed Navigation**: Glassmorphism navigation bar with backdrop blur effects
 - **Hero Section**: Split-screen layout with animated floating elements and gradient borders
@@ -63,7 +63,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: Next.js 15, React 19, Tailwind CSS
+- **Frontend**: Next.js 16, React 19, Tailwind CSS
 - **Icons**: React Icons
 - **Fonts**: Custom fonts (Burtons, Operator Mono)
 - **Deployment**: GitHub Pages compatible
@@ -115,7 +115,7 @@ const config = {
 
 ## 🔧 Recent Improvements
 
-- ✅ Updated to Next.js 15 and React 19
+- ✅ Updated to Next.js 16 and React 19
 - ✅ Fixed all ESLint warnings and errors
 - ✅ Added comprehensive portfolio projects section
 - ✅ Implemented contact section with social links

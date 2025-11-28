@@ -5,7 +5,7 @@ const config = {
         linkedin: "https://www.linkedin.com/in/some19ice/",
         github: "https://github.com/some19ice",
     },
-    resumeUrl: "https://www.linkedin.com/in/some19ice/",
+    resumeUrl: "https://drive.google.com/file/d/1JPwwhDbywhn3-F-N-UHsa3dq6BV0ynic/view?usp=sharing",
     fundMeUrl: "https://www.buymeacoffee.com/some19ice", // Update with your actual funding link
     contactEmail: "some1me247@gmail.com",
     github: {

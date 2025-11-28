@@ -9,7 +9,16 @@ const nextConfig = {
 
     // Image optimization for Vercel deployment
     images: {
-        domains: ["localhost", "opengraph.githubassets.com"],
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "localhost",
+            },
+            {
+                protocol: "https",
+                hostname: "opengraph.githubassets.com",
+            },
+        ],
         formats: ["image/webp", "image/avif"],
     },
 

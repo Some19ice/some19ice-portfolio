@@ -1,11 +1,8 @@
-import { AiFillMail, AiFillPhone, AiFillTwitterCircle, AiFillLinkedin, AiFillGithub } from "react-icons/ai";
-import { BsGeoAlt } from "react-icons/bs";
-import config from "../config";
+import { AiFillMail, AiFillTwitterCircle, AiFillLinkedin, AiFillGithub } from "react-icons/ai"
+import { BsGeoAlt } from "react-icons/bs"
+import config from "../config"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Separator } from "@/components/ui/separator"
 
 const ContactSection = () => {
     return (

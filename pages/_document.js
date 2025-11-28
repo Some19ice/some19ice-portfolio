@@ -4,17 +4,24 @@ export default function Document() {
   return (
       <Html>
           <Head>
-              <link
-                  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-                  rel="stylesheet"
-              />
-              <link
-                  href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
-                  rel="stylesheet"
-              />
-              <link
-                  href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
-                  rel="stylesheet"
+              {/* Preconnect to external domains for faster resource loading */}
+              <link rel="preconnect" href="https://opengraph.githubassets.com" />
+              <link rel="dns-prefetch" href="https://api.github.com" />
+              <script
+                  dangerouslySetInnerHTML={{
+                      __html: `
+                        (function() {
+                          try {
+                            var localValue = localStorage.getItem('darkMode');
+                            if (localValue === 'true' || localValue === null) {
+                               document.documentElement.classList.add('dark');
+                            } else {
+                               document.documentElement.classList.remove('dark');
+                            }
+                          } catch (e) {}
+                        })();
+                      `,
+                  }}
               />
           </Head>
           <body className="font-poppins">

@@ -1,15 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AiFillGithub } from "react-icons/ai";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 const ProjectCard = ({ project }) => {
-    const [isHovered, setIsHovered] = useState(false)
-    const [isDemoHovered, setIsDemoHovered] = useState(false)
-    const [isCodeHovered, setIsCodeHovered] = useState(false)
-
     // Get category color
     const getCategoryColor = (category) => {
         const colors = {
@@ -26,8 +22,6 @@ const ProjectCard = ({ project }) => {
     return (
         <Card
             className="group bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 overflow-hidden"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
         >
             {/* Header */}
             <CardHeader className="pb-3">
@@ -65,15 +59,11 @@ const ProjectCard = ({ project }) => {
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className={`object-cover transition-all duration-500 ease-out rounded-lg ${
-                        isHovered ? "scale-105" : "scale-100"
-                    }`}
+                    className="object-cover transition-all duration-500 ease-out rounded-lg group-hover:scale-105 scale-100"
                 />
                 {/* Overlay */}
                 <div
-                    className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-300 rounded-lg ${
-                        isHovered ? "opacity-100" : "opacity-60"
-                    }`}
+                    className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-300 rounded-lg opacity-60 group-hover:opacity-100"
                 />
 
                 {/* Action buttons */}
@@ -83,15 +73,11 @@ const ProjectCard = ({ project }) => {
                             href={project.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-background/90 rounded-lg text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                            onMouseEnter={() => setIsDemoHovered(true)}
-                            onMouseLeave={() => setIsDemoHovered(false)}
+                            className="p-2 bg-background/90 rounded-lg text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring group/btn"
                             title="View Live Demo"
                         >
                             <BsBoxArrowUpRight
-                                className={`text-sm transition-all duration-200 ${
-                                    isDemoHovered ? "scale-110" : "scale-100"
-                                }`}
+                                className="text-sm transition-all duration-200 group-hover/btn:scale-110 scale-100"
                             />
                         </a>
                     )}
@@ -101,15 +87,11 @@ const ProjectCard = ({ project }) => {
                             href={project.codeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-background/90 rounded-lg text-foreground hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                            onMouseEnter={() => setIsCodeHovered(true)}
-                            onMouseLeave={() => setIsCodeHovered(false)}
+                            className="p-2 bg-background/90 rounded-lg text-foreground hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring group/btn"
                             title="View Source Code"
                         >
                             <AiFillGithub
-                                className={`text-sm transition-all duration-200 ${
-                                    isCodeHovered ? "scale-110" : "scale-100"
-                                }`}
+                                className="text-sm transition-all duration-200 group-hover/btn:scale-110 scale-100"
                             />
                         </a>
                     )}
@@ -158,25 +140,13 @@ const ProjectCard = ({ project }) => {
                             )}
                         </div>
                         <div className="flex items-center gap-2">
-                            {project.demoUrl && project.demoUrl !== "#" && (
-                                <a
-                                    href={project.demoUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs text-primary hover:text-primary/80 transition-colors"
+                            {project.slug && (
+                                <Link
+                                    href={`/projects/${project.slug}`}
+                                    className="text-xs font-medium text-foreground hover:text-primary transition-colors"
                                 >
-                                    View Demo
-                                </a>
-                            )}
-                            {project.codeUrl && project.codeUrl !== "#" && (
-                                <a
-                                    href={project.codeUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs text-secondary hover:text-secondary/80 transition-colors"
-                                >
-                                    View Code
-                                </a>
+                                    View Details
+                                </Link>
                             )}
                         </div>
                     </div>

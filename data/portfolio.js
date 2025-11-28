@@ -1,63 +1,36 @@
 const portfolioProjects = [
     {
         id: 1,
-        title: "E-Commerce Platform",
-        description: "A full-stack e-commerce solution built with Next.js, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
-        image: "/web1.png",
-        technologies: ["React", "Next.js", "Node.js", "MongoDB", "Stripe"],
-        demoUrl: "https://some19ice.github.io/demo/ecommerce",
-        codeUrl: "https://github.com/some19ice/ecommerce-platform",
-        category: "Full Stack"
+        title: "NGDI Metadata Portal",
+        slug: "ngdi-metadata-portal",
+        description: "A centralized geospatial platform for the National Space Research and Development Agency. Streamlined internal data management using OGC WMS/WFS standards.",
+        image: "/ngdi-metadata-portal.jpeg",
+        technologies: ["Next.js", "Server Actions", "OGC WMS/WFS", "MapLibre"],
+        demoUrl: "https://ngdi-metadata-portal.vercel.app/", // Assuming a Vercel deployment exists or will exist, or leaving as # if unknown. User only gave git links. I will leave demoUrl as # for now as user didn't provide them.
+        codeUrl: "https://github.com/Some19ice/ngdi-metadata-portal",
+        category: "GIS"
     },
     {
         id: 2,
-        title: "Task Management App",
-        description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-        image: "/web2.png",
-        technologies: ["React", "Express", "Socket.io", "PostgreSQL"],
-        demoUrl: "https://some19ice.github.io/demo/task-manager",
-        codeUrl: "https://github.com/some19ice/task-management-app",
-        category: "Web App"
+        title: "NasrdaNavi (Campus Navigation)",
+        slug: "nasrdanavi",
+        description: "Interactive 3D navigation app with a custom graph-based routing engine and voice assistant ('Navi'). Features complex math/algorithm skills and high-end frontend interaction.",
+        image: "/nasrda-navi.png",
+        technologies: ["Mapbox GL JS", "GSAP", "NetworkX", "Shapely"],
+        demoUrl: "#",
+        codeUrl: "https://github.com/codeinpython2024/NasrdaNavi",
+        category: "GIS"
     },
     {
         id: 3,
-        title: "Cryptocurrency Dashboard",
-        description: "A responsive dashboard for tracking cryptocurrency prices, portfolio management, and market analysis with real-time data.",
-        image: "/web3.png",
-        technologies: ["React", "D3.js", "Web3", "Solidity"],
-        demoUrl: "https://some19ice.github.io/demo/crypto-dashboard",
-        codeUrl: "https://github.com/some19ice/crypto-dashboard",
-        category: "Web3"
-    },
-    {
-        id: 4,
-        title: "Restaurant Website",
-        description: "Modern restaurant website with online ordering system, reservation management, and responsive design for mobile devices.",
-        image: "/web4.png",
-        technologies: ["Next.js", "Tailwind", "Sanity CMS"],
-        demoUrl: "https://some19ice.github.io/demo/restaurant",
-        codeUrl: "https://github.com/some19ice/restaurant-website",
-        category: "Website"
-    },
-    {
-        id: 5,
-        title: "Learning Management System",
-        description: "Educational platform with course management, video streaming, progress tracking, and interactive quizzes for students and instructors.",
-        image: "/web5.png",
-        technologies: ["React", "Node.js", "MongoDB", "AWS"],
-        demoUrl: "https://some19ice.github.io/demo/lms",
-        codeUrl: "https://github.com/some19ice/learning-management-system",
+        title: "Station Stock Manager",
+        slug: "station-stock-manager",
+        description: "A custom inventory tracking system replacing paper logs for a high-volume fuel station. Drove 400% revenue growth and scaled capital from ₦15M to ₦100M.",
+        image: "/station-stock-manager.png",
+        technologies: ["React", "Clerk (RBAC)", "Shadcn UI", "Recharts"],
+        demoUrl: "#",
+        codeUrl: "https://github.com/Some19ice/station-stock-manager",
         category: "Full Stack"
-    },
-    {
-        id: 6,
-        title: "Weather App",
-        description: "Beautiful weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-        image: "/web6.png",
-        technologies: ["React", "OpenWeather API", "Chart.js"],
-        demoUrl: "https://some19ice.github.io/demo/weather-app",
-        codeUrl: "https://github.com/some19ice/weather-app",
-        category: "Web App"
     }
 ];
 
