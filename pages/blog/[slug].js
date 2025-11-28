@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import { FiArrowLeft, FiCalendar, FiClock, FiUser } from "react-icons/fi"
 import ReactMarkdown from 'react-markdown'
@@ -60,6 +61,18 @@ export default function BlogPost({ post }) {
             </div>
           </div>
         </header>
+
+        {post.coverImage && (
+          <div className="relative w-full h-64 md:h-96 mb-8 rounded-xl overflow-hidden shadow-lg">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
 
         <div className="prose dark:prose-invert max-w-none prose-lg">
           <ReactMarkdown 

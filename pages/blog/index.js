@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import { FiArrowLeft, FiCalendar, FiClock } from "react-icons/fi"
 import fs from 'fs'
@@ -28,6 +29,18 @@ export default function BlogIndex({ posts }) {
         <div className="grid gap-8">
           {posts.map((post) => (
             <article key={post.slug} className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-shadow">
+              {post.coverImage && (
+                <Link href={`/blog/${post.slug}`}>
+                  <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
+                </Link>
+              )}
               <div className="flex flex-wrap gap-2 mb-4">
                 {post.tags?.map(tag => (
                   <Badge key={tag} variant="secondary" className="text-xs">
