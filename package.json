@@ -4,8 +4,8 @@
   "homepage": "https://some19ice.github.io/some19ice-portfolio",
   "private": true,
   "engines": {
-    "node": ">=18.17.0",
-    "npm": ">=9.0.0"
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
   },
   "scripts": {
     "predeploy": "next build",
