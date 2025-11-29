@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { AiFillTwitterCircle, AiFillLinkedin, AiFillGithub } from "react-icons/ai"
-import deved from "../public/dev-ed-wave.png"
+// import deved from "../public/dev-ed-wave.png"
 import config from "../config"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"

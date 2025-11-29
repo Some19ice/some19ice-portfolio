@@ -268,7 +268,6 @@ export function NeonBorderLines({
     width = 10,
     height = 6,
     color = "hsl(var(--primary))",
-    glowIntensity = 1,
 }) {
     const borderRef = useRef(null)
     const resolvedColor = useResolvedColor(color)
