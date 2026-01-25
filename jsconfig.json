@@ -19,6 +19,6 @@
     "isolatedModules": true,
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.js", "**/*.jsx"],
+  "include": ["next-env.d.ts", "**/*.js", "**/*.jsx", "types.d.ts"],
   "exclude": ["node_modules"]
 }
