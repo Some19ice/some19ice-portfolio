@@ -17,7 +17,7 @@ const portfolioProjects = [
         description: "Interactive 3D navigation app with a custom graph-based routing engine and voice assistant ('Navi'). Features complex math/algorithm skills and high-end frontend interaction.",
         image: "/nasrda-navi.png",
         technologies: ["Mapbox GL JS", "GSAP", "NetworkX", "Shapely"],
-        demoUrl: "#",
+        demoUrl: null,
         codeUrl: "https://github.com/codeinpython2024/NasrdaNavi",
         category: "GIS"
     },
@@ -28,7 +28,7 @@ const portfolioProjects = [
         description: "A custom inventory tracking system replacing paper logs for a high-volume fuel station. Drove 400% revenue growth and scaled capital from ₦15M to ₦100M.",
         image: "/station-stock-manager.png",
         technologies: ["React", "Clerk (RBAC)", "Shadcn UI", "Recharts"],
-        demoUrl: "#",
+        demoUrl: null,
         codeUrl: "https://github.com/Some19ice/station-stock-manager",
         category: "Full Stack"
     }
