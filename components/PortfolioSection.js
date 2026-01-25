@@ -94,73 +94,70 @@ export default function PortfolioSection({ portfolioRef }) {
         selectedCategory !== "All Projects" || searchQuery || selectedTechnologies.length > 0
 
     return (
-        <section id="portfolio" className="py-20 px-6 lg:px-8 scroll-mt-24 relative z-10">
+        <section id="portfolio" className="py-24 px-6 lg:px-8 scroll-mt-24 relative z-10">
+            {/* Background decoration */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 -right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+                <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+            </div>
+
             <div
                 ref={portfolioRef}
                 className="absolute top-0 right-0 w-48 h-48 pointer-events-none opacity-30"
             />
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="mb-12">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-                        <div>
-                            <h2 className="text-3xl font-bold text-foreground mb-2">
-                                Recent Projects
-                            </h2>
-                            <p className="text-muted-foreground">
-                                A showcase of my latest work and achievements
-                            </p>
-                        </div>
-                        <div className="flex gap-2">
-                            {hasActiveFilters && (
-                                <Button variant="outline" size="sm" onClick={clearFilters}>
-                                    Clear Filters
-                                </Button>
-                            )}
-                            <Button variant="outline" size="sm" asChild>
-                                <a
-                                    href={config.socialMedia.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2"
+                <div className="mb-16 text-center">
+                    <Badge variant="outline" className="mb-4 bg-accent/10 text-accent border-accent/20">
+                        Featured Work
+                    </Badge>
+                    <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                        Projects I&apos;ve Built
+                    </h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        From national-scale data portals to 3D navigation systems — 
+                        here&apos;s a selection of my recent work
+                    </p>
+                </div>
+
+                {/* Filters Row */}
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
+                    <div className="flex gap-2">
+                        {hasActiveFilters && (
+                            <Button variant="outline" size="sm" onClick={clearFilters}>
+                                Clear Filters
+                            </Button>
+                        )}
+                        <Button variant="outline" size="sm" asChild>
+                            <a
+                                href={config.socialMedia.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2"
+                            >
+                                View GitHub
+                                <svg
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
                                 >
-                                    View GitHub
-                                    <svg
-                                        className="h-4 w-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                        />
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
                                     </svg>
                                 </a>
                             </Button>
                         </div>
                     </div>
 
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                        {stats.map((s) => (
-                            <DashboardCard key={s.label} className="text-center" size="sm">
-                                <div className="space-y-1">
-                                    <div className={`text-2xl font-bold text-${s.color}`}>
-                                        {s.value}
-                                    </div>
-                                    <div className="text-xs text-muted-foreground">{s.label}</div>
-                                </div>
-                            </DashboardCard>
-                        ))}
-                    </div>
-
-                    {/* Enhanced Filters */}
-                    <div className="space-y-6 mb-8">
+                    {/* Compact Filters */}
+                    <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                         {/* Search Bar */}
-                        <div className="relative max-w-md">
+                        <div className="relative flex-1 max-w-md">
                             <svg
                                 className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground"
                                 fill="none"
@@ -176,10 +173,10 @@ export default function PortfolioSection({ portfolioRef }) {
                             </svg>
                             <Input
                                 type="text"
-                                placeholder="Search projects, technologies, or keywords..."
+                                placeholder="Search projects..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-10 bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50"
+                                className="pl-10 bg-card/50 backdrop-blur-sm border-border/50 focus:border-primary/50"
                                 aria-label="Search projects"
                             />
                             {searchQuery && (
@@ -205,75 +202,38 @@ export default function PortfolioSection({ portfolioRef }) {
                             )}
                         </div>
 
-                        {/* Category Filters */}
-                        <div className="space-y-3">
-                            <h3 className="text-sm font-medium text-muted-foreground">Category</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {categories.map((cat) => (
-                                    <Badge
-                                        key={cat}
-                                        variant={selectedCategory === cat ? "default" : "outline"}
-                                        className={`cursor-pointer transition-all hover:scale-105 ${
-                                            selectedCategory === cat ? "" : "hover:bg-muted/50"
-                                        }`}
-                                        onClick={() => setSelectedCategory(cat)}
-                                        role="button"
-                                        tabIndex={0}
-                                        onKeyDown={(e) =>
-                                            e.key === "Enter" && setSelectedCategory(cat)
-                                        }
-                                        aria-pressed={selectedCategory === cat}
-                                    >
-                                        {cat}
-                                    </Badge>
-                                ))}
-                            </div>
+                        {/* Category Pills */}
+                        <div className="flex flex-wrap gap-2">
+                            {categories.map((cat) => (
+                                <Badge
+                                    key={cat}
+                                    variant={selectedCategory === cat ? "default" : "outline"}
+                                    className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
+                                        selectedCategory === cat 
+                                            ? "bg-primary text-primary-foreground" 
+                                            : "hover:bg-primary/10 hover:text-primary hover:border-primary/30"
+                                    }`}
+                                    onClick={() => setSelectedCategory(cat)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) =>
+                                        e.key === "Enter" && setSelectedCategory(cat)
+                                    }
+                                    aria-pressed={selectedCategory === cat}
+                                >
+                                    {cat}
+                                </Badge>
+                            ))}
                         </div>
-
-                        {/* Technology Filters */}
-                        {allTechnologies.length > 0 && (
-                            <div className="space-y-3">
-                                <h3 className="text-sm font-medium text-muted-foreground">
-                                    Technologies
-                                </h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {allTechnologies.map((tech) => (
-                                        <Badge
-                                            key={tech}
-                                            variant={
-                                                selectedTechnologies.includes(tech)
-                                                    ? "default"
-                                                    : "outline"
-                                            }
-                                            className={`cursor-pointer transition-all hover:scale-105 ${
-                                                selectedTechnologies.includes(tech)
-                                                    ? ""
-                                                    : "hover:bg-muted/50"
-                                            }`}
-                                            onClick={() => toggleTechnology(tech)}
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={(e) =>
-                                                e.key === "Enter" && toggleTechnology(tech)
-                                            }
-                                            aria-pressed={selectedTechnologies.includes(tech)}
-                                        >
-                                            {tech}
-                                        </Badge>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
-                </div>
 
                 {/* Results Grid */}
                 {displayProjects.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {displayProjects.map((project, i) => (
                             <div
                                 key={project.codeUrl || project.id || i}
-                                className="group transition-all duration-300"
+                                className="transition-all duration-300"
                                 style={{ animationDelay: `${i * 100}ms` }}
                             >
                                 <ProjectCard project={project} />

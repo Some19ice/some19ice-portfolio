@@ -5,6 +5,9 @@ const nextConfig = {
     // React configuration
     reactStrictMode: true,
 
+    // Silence Turbopack warning (use Turbopack by default in Next 16)
+    turbopack: {},
+
     // Performance optimizations
     experimental: {
         // Optimize package imports for better tree-shaking
@@ -37,10 +40,6 @@ const nextConfig = {
                   exclude: ["error"],
               }
             : false,
-        // Enable React Compiler for automatic memoization (when available)
-        ...(process.env.REACT_COMPILER && {
-            reactCompiler: true,
-        }),
     },
 
     // Production optimizations
@@ -52,20 +51,6 @@ const nextConfig = {
     // Performance improvements
     poweredByHeader: false,
     compress: true,
-
-    // Bundle optimization
-    webpack: (config, { isServer }) => {
-        // Optimize bundle size
-        if (!isServer) {
-            config.resolve.fallback = {
-                ...config.resolve.fallback,
-                fs: false,
-                net: false,
-                tls: false,
-            }
-        }
-        return config
-    },
 }
 
 module.exports = nextConfig
