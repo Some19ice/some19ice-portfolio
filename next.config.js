@@ -5,9 +5,13 @@ const nextConfig = {
     // React configuration
     reactStrictMode: true,
 
-    // Performance optimizations (swcMinify is enabled by default in Next.js 13+)
+    // Performance optimizations
+    experimental: {
+        // Optimize package imports for better tree-shaking
+        optimizePackageImports: ["@react-three/fiber", "@react-three/drei", "three"],
+    },
 
-    // Image optimization for Vercel deployment
+    // Image optimization
     images: {
         unoptimized: true,
         remotePatterns: [
@@ -24,7 +28,7 @@ const nextConfig = {
     },
 
     // Static export configuration for GitHub Pages
-    output: 'export',
+    output: "export",
 
     // Compiler optimizations
     compiler: {
@@ -33,17 +37,35 @@ const nextConfig = {
                   exclude: ["error"],
               }
             : false,
+        // Enable React Compiler for automatic memoization (when available)
+        ...(process.env.REACT_COMPILER && {
+            reactCompiler: true,
+        }),
     },
 
     // Production optimizations
     ...(isProd && {
         // Disable source maps in production for security
         productionBrowserSourceMaps: false,
-
-        // Package optimization is handled automatically in Next.js 15+
     }),
 
-    // Security headers are handled by Vercel configuration for static export
+    // Performance improvements
+    poweredByHeader: false,
+    compress: true,
+
+    // Bundle optimization
+    webpack: (config, { isServer }) => {
+        // Optimize bundle size
+        if (!isServer) {
+            config.resolve.fallback = {
+                ...config.resolve.fallback,
+                fs: false,
+                net: false,
+                tls: false,
+            }
+        }
+        return config
+    },
 }
 
 module.exports = nextConfig
