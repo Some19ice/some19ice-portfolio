@@ -73,7 +73,7 @@ export default function Home() {
         image: "https://some19ice.github.io/some19ice-portfolio/avatar.png",
         sameAs: [
             "https://github.com/Some19ice",
-            "https://linkedin.com/in/yakubu-umar",
+            "https://linkedin.com/in/some19ice",
             "https://twitter.com/some19ice",
         ],
         knowsAbout: [
@@ -89,10 +89,6 @@ export default function Home() {
         worksFor: {
             "@type": "Organization",
             name: "National Space Research and Development Agency (NASRDA)",
-        },
-        alumniOf: {
-            "@type": "EducationalOrganization",
-            name: "Not specified",
         },
         offers: {
             "@type": "Offer",
