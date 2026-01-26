@@ -1,0 +1,37 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#172554;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  
+  <!-- Map Interface Representation -->
+  <rect x="50" y="50" width="700" height="500" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+  
+  <!-- Sidebar -->
+  <rect x="50" y="50" width="200" height="500" rx="10" fill="rgba(0,0,0,0.2)" />
+  
+  <!-- Charts -->
+  <rect x="70" y="80" width="160" height="80" rx="5" fill="rgba(255,255,255,0.1)" />
+  <rect x="70" y="180" width="160" height="80" rx="5" fill="rgba(255,255,255,0.1)" />
+  
+  <!-- Map Features -->
+  <path d="M 400 300 L 450 250 L 550 280 L 600 350 L 500 400 Z" fill="rgba(59, 130, 246, 0.4)" stroke="#3b82f6" stroke-width="2" />
+  <path d="M 350 200 L 400 150 L 450 180 Z" fill="rgba(239, 68, 68, 0.4)" stroke="#ef4444" stroke-width="2" />
+  
+  <!-- Text -->
+  <text x="400" y="580" font-family="Arial" font-size="24" fill="white" text-anchor="middle" font-weight="bold">Flooding &amp; Cholera Surveillance</text>
+  <text x="400" y="530" font-family="Arial" font-size="14" fill="#94a3b8" text-anchor="middle">Real-time Satellite &amp; Epidemiological Monitoring</text>
+  
+  <!-- Icons/Elements -->
+  <circle cx="680" cy="90" r="20" fill="rgba(255,255,255,0.1)" />
+  <circle cx="680" cy="140" r="20" fill="rgba(255,255,255,0.1)" />
+</svg>

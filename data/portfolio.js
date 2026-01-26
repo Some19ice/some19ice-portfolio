@@ -31,6 +31,17 @@ const portfolioProjects = [
         demoUrl: null,
         codeUrl: "https://github.com/Some19ice/station-stock-manager",
         category: "Full Stack"
+    },
+    {
+        id: 4,
+        title: "Flooding & Cholera Surveillance",
+        slug: "flood-cholera-dashboard",
+        description: "Real-time epidemiological and environmental monitoring dashboard. Integrates Sentinel-2/1 imagery via Google Earth Engine with PostGIS for risk modeling.",
+        image: "/flood-cholera-dashboard.svg",
+        technologies: ["Next.js", "Python (FastAPI)", "Google Earth Engine", "PostGIS", "Leaflet"],
+        demoUrl: "https://flooding-cholera.vercel.app",
+        codeUrl: "https://github.com/Some19ice/flooding-cholera",
+        category: "Full Stack"
     }
 ];
 
