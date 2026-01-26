@@ -43,26 +43,41 @@ This upgrade transforms the static portfolio into an immersive **Geospatial Comm
 
 ```mermaid
 graph TD
-    User[Visitor] -->|Interacts| FE[Frontend (Next.js)]
+    %% Define classes for styling
+    classDef user fill:#e11d48,stroke:#fda4af,stroke-width:2px,color:#fff,font-weight:bold,rx:10,ry:10;
+    classDef frontend fill:#1e40af,stroke:#60a5fa,stroke-width:2px,color:#fff,rx:5,ry:5;
+    classDef backend fill:#4338ca,stroke:#818cf8,stroke-width:2px,color:#fff,rx:5,ry:5;
+    classDef data fill:#065f46,stroke:#34d399,stroke-width:2px,color:#fff,stroke-dasharray: 5 5;
+    classDef container fill:#1f2937,stroke:#374151,stroke-width:2px,color:#e5e7eb,stroke-dasharray: 3 3;
+
+    %% Main Nodes
+    User["Visitor"]:::user -->|Interacts| FE["Frontend (Next.js)"]:::frontend
     
-    subgraph "Frontend Layer"
-        FE -->|Renders| Globe[React Three Fiber / Globe.gl]
-        FE -->|Inputs| Chat[Chat Widget]
-        Globe -->|Visualizes| Pins[Project Pins]
-        Globe -->|Visualizes| Layers[GIS Overlays]
+    %% Frontend Subgraph
+    subgraph FrontendLayer ["Frontend Layer"]
+        direction TB
+        FE -->|Renders| Globe["React Three Fiber / Globe.gl"]:::frontend
+        FE -->|Inputs| Chat["Chat Widget"]:::frontend
+        Globe -->|Visualizes| Pins["Project Pins"]:::frontend
+        Globe -->|Visualizes| Layers["GIS Overlays"]:::frontend
     end
     
-    subgraph "Backend Layer (Python/FastAPI)"
-        Chat -->|Sends Prompt| Agent[AI Agent Orchestrator]
-        Agent -->|Decides Action| Tools[Tool Registry]
+    %% Backend Subgraph
+    subgraph BackendLayer ["Backend Layer (Python/FastAPI)"]
+        direction TB
+        Chat -->|Sends Prompt| Agent["AI Agent Orchestrator"]:::backend
+        Agent -->|Decides Action| Tools["Tool Registry"]:::backend
         
-        Tools -->|Query| GEE[Google Earth Engine]
-        Tools -->|Query| DB[(PostGIS DB)]
-        Tools -->|Query| Portfolio[Portfolio Data JSON]
+        Tools -->|Query| GEE["Google Earth Engine"]:::data
+        Tools -->|Query| DB[("PostGIS DB")]:::data
+        Tools -->|Query| Portfolio["Portfolio Data JSON"]:::data
         
         GEE -->|Returns Tiles| FE
         Agent -->|Returns Response + ViewState| FE
     end
+
+    %% Apply styles to Subgraphs
+    class FrontendLayer,BackendLayer container
 ```
 
 ### Component Breakdown
@@ -75,8 +90,11 @@ graph TD
     *   `React.memo` to prevent re-renders during chat typing.
 
 **2. The AI Agent Service (`backend/app/routers/agent.py`)**
-*   **Framework:** `LangChain` or simple OpenAI/Gemini Function Calling.
-*   **State:** Stateless (for simplicity) or simple session-based in memory.
+*   **Frontend SDK:** **Vercel AI SDK (Core + React)**
+    *   *Why:* The industry standard for streaming UI. Handles optimistic updates and tool invocations seamlessly.
+*   **Backend Framework:** **LangGraph** (by LangChain) or **PydanticAI**
+    *   *Why:* Trending, state-of-the-art agentic frameworks. LangGraph allows cyclic graphs (Reasoning -> Tool -> Reasoning), which is perfect for complex GIS queries.
+*   **State:** Persisted via LangGraph Checkpoint (Postgres) for long-running conversations.
 *   **Tools:**
     *   `navigate_to(lat, lon, zoom)`: Returns view coordinates to frontend.
     *   `get_project_info(query)`: RAG search over `portfolio.js`.
