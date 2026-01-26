@@ -25,14 +25,14 @@ const RadarSweep = dynamic(
     () => import("../components/AnimatedLines").then((mod) => ({ default: mod.RadarSweep })),
     { ssr: false }
 )
-const BackgroundGrid = dynamic(
-    () => import("../components/AnimatedLines").then((mod) => ({ default: mod.BackgroundGrid })),
-    { ssr: false }
-)
+// Globe Components
+const LivingGlobe = dynamic(() => import("../components/LivingGlobe"), { ssr: false })
+const ChatTerminal = dynamic(() => import("../components/ChatTerminal"), { ssr: false })
 
 export default function Home() {
     const [darkMode, setDarkMode] = useState(true)
     const [mounted, setMounted] = useState(false)
+    const [globeTarget, setGlobeTarget] = useState(null)
 
     const mainRef = useRef(null)
     const overviewLeftRef = useRef(null)
@@ -187,25 +187,10 @@ export default function Home() {
                 ref={mainRef}
                 className="min-h-screen bg-background transition-colors duration-300 relative"
             >
-                {/* Background */}
-                <div className="fixed inset-0 pointer-events-none z-0">
-                    <BackgroundGrid opacity={0.03} size={40} color="hsl(var(--primary))" />
+                {/* Background: Living Globe */}
+                <div className="fixed inset-0 z-0">
+                    <LivingGlobe targetLocation={globeTarget} />
                 </div>
-                <Canvas
-                    eventSource={mainRef}
-                    className="fixed inset-0 pointer-events-none z-0"
-                    style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        pointerEvents: "none",
-                        zIndex: 0,
-                    }}
-                >
-                    <View.Port />
-                </Canvas>
 
                 <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
                 <HeroSeparator />
@@ -220,7 +205,7 @@ export default function Home() {
                 <ContactSeparator />
                 <ContactSection />
 
-                {/* 3D Effects */}
+                {/* 3D Effects (Overlays) */}
                 <Canvas
                     className="fixed inset-0 pointer-events-none z-0"
                     eventSource={mainRef}
@@ -250,6 +235,9 @@ export default function Home() {
                         <ambientLight intensity={0.2} />
                     </View>
                 </Canvas>
+
+                {/* Floating Chat Terminal */}
+                <ChatTerminal onCommand={setGlobeTarget} />
             </main>
         </div>
     )
