@@ -51,12 +51,19 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
   // Handle Target Location Updates (The "Swoop")
   useEffect(() => {
     if (targetLocation && globeEl.current) {
-      // Smooth swoop to location
-      globeEl.current.pointOfView({
-        lat: targetLocation.lat,
-        lng: targetLocation.lng,
-        altitude: targetLocation.altitude || 1.5 // Zoom level
-      }, 2000); // 2000ms transition duration
+      try {
+        if (typeof globeEl.current.pointOfView === 'function') {
+          globeEl.current.pointOfView({
+            lat: targetLocation.lat,
+            lng: targetLocation.lng,
+            altitude: targetLocation.altitude || 1.5
+          }, 2000);
+        } else {
+          console.warn("Globe method pointOfView not found");
+        }
+      } catch (err) {
+        console.error("Error moving globe:", err);
+      }
     }
   }, [targetLocation]);
 
@@ -74,15 +81,14 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
         atmosphereColor="#3a228a"
         atmosphereAltitude={0.15}
         
-        // Pins (Custom HTML or Built-in)
-        // Using points for simplicity in prototype
+        // Pins
         pointsData={projects}
         pointLat="lat"
         pointLng="lng"
         pointColor="color"
         pointAltitude="alt"
         pointRadius={0.5}
-        pointsMerge={true} // Performance optimization
+        pointsMerge={true}
         pointLabel="name"
         
         // Auto-rotate
@@ -92,19 +98,28 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
         // Interaction
         onPointClick={(point) => {
           if (globeEl.current) {
-            globeEl.current.pointOfView({
-              lat: point.lat,
-              lng: point.lng,
-              altitude: 1.5
-            }, 1000);
+            try {
+              globeEl.current.pointOfView({
+                lat: point.lat,
+                lng: point.lng,
+                altitude: 1.5
+              }, 1000);
+            } catch (err) {
+              console.error("Click move error:", err);
+            }
           }
         }}
         
         onGlobeReady={() => {
           if(onGlobeReady) onGlobeReady();
-          if (globeEl.current) {
-            globeEl.current.pointOfView({ lat: 15, lng: 10, altitude: 2.5 }); // Initial view over Africa
-          }
+          // Initial view
+          setTimeout(() => {
+             if (globeEl.current && typeof globeEl.current.pointOfView === 'function') {
+               try {
+                 globeEl.current.pointOfView({ lat: 15, lng: 10, altitude: 2.5 });
+               } catch (e) { console.error(e); }
+             }
+          }, 500);
         }}
       />
     </div>

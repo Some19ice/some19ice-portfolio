@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react"
 import { Canvas } from "@react-three/fiber"
 import { View } from "@react-three/drei"
 
+import ErrorBoundary from "../components/ErrorBoundary"
 import Navigation from "../components/Navigation"
 import HeroSection from "../components/HeroSection"
 import ServicesSection from "../components/ServicesSection"
@@ -189,7 +190,9 @@ export default function Home() {
             >
                 {/* Background: Living Globe */}
                 <div className="fixed inset-0 z-0">
-                    <LivingGlobe targetLocation={globeTarget} onGlobeReady={() => {}} />
+                    <ErrorBoundary>
+                        <LivingGlobe targetLocation={globeTarget} onGlobeReady={() => {}} />
+                    </ErrorBoundary>
                 </div>
 
                 <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
@@ -237,7 +240,9 @@ export default function Home() {
                 </Canvas>
 
                 {/* Floating Chat Terminal */}
-                <ChatTerminal onCommand={setGlobeTarget} />
+                <ErrorBoundary>
+                    <ChatTerminal onCommand={setGlobeTarget} />
+                </ErrorBoundary>
             </main>
         </div>
     )
