@@ -31,8 +31,17 @@ Return your response in strict JSON format:
   "action": {
     "lat": number,
     "lng": number,
-    "altitude": number (0.5 to 2.5)
+    "altitude": number (0.5 to 2.5),
+    "layer": "flood" | "cholera" | null  <-- NEW: Include this if topic is flooding or disease
   } | null
+}
+
+Example:
+User: "Show me the flood risk in Cross River."
+Response:
+{
+  "text": "Navigating to Cross River State. The Flood Risk Dashboard utilizes Sentinel-1 imagery to analyze vulnerability.",
+  "action": { "lat": 5.8702, "lng": 8.5988, "altitude": 0.8, "layer": "flood" }
 }
 `;
 

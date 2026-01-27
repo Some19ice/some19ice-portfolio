@@ -34,8 +34,18 @@ export default function Home() {
     const [darkMode, setDarkMode] = useState(true)
     const [mounted, setMounted] = useState(false)
     const [globeTarget, setGlobeTarget] = useState(null)
+    const [activeLayer, setActiveLayer] = useState(null)
 
-    const mainRef = useRef(null)
+    const handleCommand = (action) => {
+        if (action.lat && action.lng) {
+            setGlobeTarget({ lat: action.lat, lng: action.lng, altitude: action.altitude })
+        }
+        if (action.layer) {
+            setActiveLayer(action.layer)
+        } else {
+            setActiveLayer(null) // Reset layer if none specified
+        }
+    }
     const overviewLeftRef = useRef(null)
     const overviewRightRef = useRef(null)
     const servicesRef = useRef(null)
@@ -191,7 +201,11 @@ export default function Home() {
                 {/* Background: Living Globe */}
                 <div className="fixed inset-0 z-0">
                     <ErrorBoundary>
-                        <LivingGlobe targetLocation={globeTarget} onGlobeReady={() => {}} />
+                        <LivingGlobe 
+                            targetLocation={globeTarget} 
+                            activeLayer={activeLayer}
+                            onGlobeReady={() => {}} 
+                        />
                     </ErrorBoundary>
                 </div>
 
@@ -241,7 +255,7 @@ export default function Home() {
 
                 {/* Floating Chat Terminal */}
                 <ErrorBoundary>
-                    <ChatTerminal onCommand={setGlobeTarget} />
+                    <ChatTerminal onCommand={handleCommand} />
                 </ErrorBoundary>
             </main>
         </div>
