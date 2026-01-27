@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiSend, FiTerminal } from 'react-icons/fi';
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatTerminal({ onCommand }) {
   const [input, setInput] = useState('');
@@ -109,8 +110,15 @@ export default function ChatTerminal({ onCommand }) {
                 ? 'text-slate-500 text-xs italic'
                 : 'text-slate-300'
             }`}>
-              {msg.type === 'ai' && <span className="text-green-500 mr-2">➜</span>}
-              {msg.content}
+              {msg.type === 'ai' && <span className="text-green-500 mr-2 float-left">➜</span>}
+              <div className="prose prose-invert prose-sm max-w-none">
+                <ReactMarkdown components={{
+                  a: ({node, ...props}) => <a {...props} className="text-[#22d3ee] underline hover:text-white" target="_blank" rel="noopener noreferrer" />,
+                  p: ({node, ...props}) => <p {...props} className="m-0 inline" />
+                }}>
+                  {msg.content}
+                </ReactMarkdown>
+              </div>
             </div>
           </div>
         ))}
