@@ -27,33 +27,32 @@ export default function ChatTerminal({ onCommand }) {
     setHistory(prev => [...prev, { type: 'user', content: userMsg }]);
     setInput('');
 
-    // Mock AI Processing
-    setTimeout(() => {
-      processCommand(userMsg);
-    }, 600);
+    // AI Processing
+    processCommand(userMsg);
   };
 
-  const processCommand = (cmd) => {
-    const lowerCmd = cmd.toLowerCase();
-    let response = "I didn't recognize that sector. Try asking about 'Flood', 'NGDI', or 'Lagos'.";
-    let action = null;
+  const processCommand = async (cmd) => {
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: cmd }),
+      });
 
-    if (lowerCmd.includes('abuja') || lowerCmd.includes('ngdi')) {
-      response = "Vectoring to Abuja. Displaying NGDI Metadata Portal node.";
-      action = { lat: 9.0765, lng: 7.3986, altitude: 0.5 }; // Zoomed in
-    } else if (lowerCmd.includes('flood') || lowerCmd.includes('cholera') || lowerCmd.includes('cross river')) {
-      response = "Loading Sentinel-1 SAR imagery for Cross River State. High flood risk detected.";
-      action = { lat: 5.8702, lng: 8.5988, altitude: 0.8 };
-    } else if (lowerCmd.includes('lagos') || lowerCmd.includes('station')) {
-      response = "Navigating to Lagos commercial district. Station Stock Manager deployed here.";
-      action = { lat: 6.5244, lng: 3.3792, altitude: 0.5 };
-    } else if (lowerCmd.includes('hello') || lowerCmd.includes('hi')) {
-      response = "Greetings. I am the portfolio navigator. Where would you like to go?";
-    }
+      if (!res.ok) throw new Error('Failed to reach Orbital Command');
 
-    setHistory(prev => [...prev, { type: 'ai', content: response }]);
-    if (action && onCommand) {
-      onCommand(action);
+      const data = await res.json();
+      
+      // Update history with AI response
+      setHistory(prev => [...prev, { type: 'ai', content: data.text }]);
+      
+      // Execute action if provided
+      if (data.action && onCommand) {
+        onCommand(data.action);
+      }
+    } catch (error) {
+      console.error('Command failed:', error);
+      setHistory(prev => [...prev, { type: 'system', content: 'Connection to Orbital Command interrupted.' }]);
     }
   };
 

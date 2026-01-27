@@ -1,6 +1,8 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import * as THREE from 'three';
+import { fetchTLEs, getSatellitePosition, generateOrbitPath } from '../lib/satelliteUtils';
 
 // Dynamically import Globe to avoid SSR issues with WebGL
 const Globe = dynamic(() => import('react-globe.gl'), {
@@ -12,9 +14,32 @@ const Globe = dynamic(() => import('react-globe.gl'), {
   ),
 });
 
-export default function LivingGlobe({ onGlobeReady, targetLocation }) {
+export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer }) {
   const globeEl = useRef();
   const [mounted, setMounted] = useState(false);
+  const [satellites, setSatellites] = useState([]);
+  const [orbits, setOrbits] = useState([]);
+  const [floodData, setFloodData] = useState([]);
+
+  // Generate mock flood data for visualization
+  useEffect(() => {
+    if (activeLayer === 'flood' || activeLayer === 'cholera') {
+      const data = [];
+      // Focus on Nigeria (approx bounds: Lat 4-14, Lng 2-15)
+      // Specific focus on Benue/Niger river confluence and coastal areas
+      for (let i = 0; i < 400; i++) {
+        // Randomly distribute points with some clustering
+        const lat = 4 + Math.random() * 10; 
+        const lng = 2 + Math.random() * 12;
+        // Higher weight near rivers (mock logic)
+        const weight = Math.random();
+        data.push({ lat, lng, weight });
+      }
+      setFloodData(data);
+    } else {
+      setFloodData([]);
+    }
+  }, [activeLayer]);
 
   // Project Pins Data
   const projects = useMemo(() => [
@@ -46,6 +71,30 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Initialize Satellites
+    fetchTLEs().then(tles => {
+      // 1. Generate Orbit Paths (Static for the session)
+      const now = new Date();
+      const orbitPaths = tles.map(tle => ({
+        name: tle.name,
+        color: tle.type === 'Station' ? '#facc15' : '#a855f7',
+        path: generateOrbitPath(tle, now)
+      }));
+      setOrbits(orbitPaths);
+
+      // 2. Start Animation Loop for Live Position
+      const interval = setInterval(() => {
+        const time = new Date();
+        const currentPos = tles.map(tle => {
+          const pos = getSatellitePosition(tle, time);
+          return pos ? { ...pos, name: tle.name, type: tle.type } : null;
+        }).filter(Boolean);
+        setSatellites(currentPos);
+      }, 1000); // Update every second
+
+      return () => clearInterval(interval);
+    });
   }, []);
 
   // Handle Target Location Updates (The "Swoop")
@@ -69,6 +118,12 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
 
   if (!mounted) return null;
 
+  const hexBinColor = useMemo(() => {
+    if (activeLayer === 'flood') return d => `rgba(249, 115, 22, ${d.sumWeight * 0.15})`; // Orange for Flood
+    if (activeLayer === 'cholera') return d => `rgba(239, 68, 68, ${d.sumWeight * 0.15})`; // Red for Cholera
+    return 'rgba(0,0,0,0)';
+  }, [activeLayer]);
+
   return (
     <div className="absolute inset-0 z-0">
       <Globe
@@ -81,6 +136,16 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
         atmosphereColor="#3a228a"
         atmosphereAltitude={0.15}
         
+        // Hex Bin Data (Flood/Cholera Layers)
+        hexBinPointsData={floodData}
+        hexBinPointWeight="weight"
+        hexBinResolution={4}
+        hexBinMerge={true}
+        hexTopColor={hexBinColor}
+        hexSideColor={hexBinColor}
+        hexBinAltitude={d => d.sumWeight * 0.05} // Height based on data
+        hexTransitionDuration={1000}
+        
         // Pins
         pointsData={projects}
         pointLat="lat"
@@ -90,6 +155,32 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
         pointRadius={0.5}
         pointsMerge={true}
         pointLabel="name"
+        
+        // Satellites (Objects)
+        objectsData={satellites}
+        objectLat="lat"
+        objectLng="lng"
+        objectAltitude="alt"
+        objectLabel="name"
+        objectThreeObject={d => {
+          const color = d.type === 'Station' ? 0xfacc15 : 0xa855f7;
+          return new THREE.Mesh(
+            new THREE.SphereGeometry(d.type === 'Station' ? 1.5 : 0.8),
+            new THREE.MeshLambertMaterial({ color })
+          );
+        }}
+        
+        // Orbit Paths
+        pathsData={orbits}
+        pathPoints="path"
+        pathPointLat={p => p[0]}
+        pathPointLng={p => p[1]}
+        pathPointAlt={p => p[2]}
+        pathColor="color"
+        pathStroke={2} 
+        pathDashLength={0.5}
+        pathDashGap={0.2}
+        pathDashAnimateTime={12000}
         
         // Auto-rotate
         autoRotate={true}
