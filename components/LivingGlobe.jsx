@@ -1,6 +1,8 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import * as THREE from 'three';
+import { fetchTLEs, getSatellitePosition, generateOrbitPath } from '../lib/satelliteUtils';
 
 // Dynamically import Globe to avoid SSR issues with WebGL
 const Globe = dynamic(() => import('react-globe.gl'), {
@@ -15,6 +17,8 @@ const Globe = dynamic(() => import('react-globe.gl'), {
 export default function LivingGlobe({ onGlobeReady, targetLocation }) {
   const globeEl = useRef();
   const [mounted, setMounted] = useState(false);
+  const [satellites, setSatellites] = useState([]);
+  const [orbits, setOrbits] = useState([]);
 
   // Project Pins Data
   const projects = useMemo(() => [
@@ -46,6 +50,30 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Initialize Satellites
+    fetchTLEs().then(tles => {
+      // 1. Generate Orbit Paths (Static for the session)
+      const now = new Date();
+      const orbitPaths = tles.map(tle => ({
+        name: tle.name,
+        color: tle.type === 'Station' ? '#facc15' : '#a855f7',
+        path: generateOrbitPath(tle, now)
+      }));
+      setOrbits(orbitPaths);
+
+      // 2. Start Animation Loop for Live Position
+      const interval = setInterval(() => {
+        const time = new Date();
+        const currentPos = tles.map(tle => {
+          const pos = getSatellitePosition(tle, time);
+          return pos ? { ...pos, name: tle.name, type: tle.type } : null;
+        }).filter(Boolean);
+        setSatellites(currentPos);
+      }, 1000); // Update every second
+
+      return () => clearInterval(interval);
+    });
   }, []);
 
   // Handle Target Location Updates (The "Swoop")
@@ -90,6 +118,32 @@ export default function LivingGlobe({ onGlobeReady, targetLocation }) {
         pointRadius={0.5}
         pointsMerge={true}
         pointLabel="name"
+        
+        // Satellites (Objects)
+        objectsData={satellites}
+        objectLat="lat"
+        objectLng="lng"
+        objectAltitude="alt"
+        objectLabel="name"
+        objectThreeObject={d => {
+          const color = d.type === 'Station' ? 0xfacc15 : 0xa855f7;
+          return new THREE.Mesh(
+            new THREE.SphereGeometry(d.type === 'Station' ? 1.5 : 0.8),
+            new THREE.MeshLambertMaterial({ color })
+          );
+        }}
+        
+        // Orbit Paths
+        pathsData={orbits}
+        pathPoints="path"
+        pathPointLat={p => p[0]}
+        pathPointLng={p => p[1]}
+        pathPointAlt={p => p[2]}
+        pathColor="color"
+        pathStroke={2} 
+        pathDashLength={0.5}
+        pathDashGap={0.2}
+        pathDashAnimateTime={12000}
         
         // Auto-rotate
         autoRotate={true}
