@@ -20,6 +20,15 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
   const [satellites, setSatellites] = useState([]);
   const [orbits, setOrbits] = useState([]);
   const [floodData, setFloodData] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect Mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Generate mock flood data for visualization
   useEffect(() => {
@@ -119,18 +128,25 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
   if (!mounted) return null;
 
   const hexBinColor = useMemo(() => {
-    if (activeLayer === 'flood') return d => `rgba(249, 115, 22, ${d.sumWeight * 0.15})`; // Orange for Flood
-    if (activeLayer === 'cholera') return d => `rgba(239, 68, 68, ${d.sumWeight * 0.15})`; // Red for Cholera
+    if (activeLayer === 'flood') return d => `rgba(249, 115, 22, ${d.sumWeight * 0.15})`; 
+    if (activeLayer === 'cholera') return d => `rgba(239, 68, 68, ${d.sumWeight * 0.15})`;
     return 'rgba(0,0,0,0)';
   }, [activeLayer]);
 
+  // Mobile Fallback: Render a lighter version or static image if WebGL is too heavy?
+  // For now, let's optimize the Globe props for mobile.
+  
   return (
     <div className="absolute inset-0 z-0">
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+        bumpImageUrl={!isMobile ? "//unpkg.com/three-globe/example/img/earth-topology.png" : null}
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+        
+        // Performance: Reduce resolution on mobile
+        hexBinResolution={isMobile ? 2 : 4}
+        pointsMerge={true}
         
         // Atmosphere
         atmosphereColor="#3a228a"
@@ -139,11 +155,9 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
         // Hex Bin Data (Flood/Cholera Layers)
         hexBinPointsData={floodData}
         hexBinPointWeight="weight"
-        hexBinResolution={4}
-        hexBinMerge={true}
         hexTopColor={hexBinColor}
         hexSideColor={hexBinColor}
-        hexBinAltitude={d => d.sumWeight * 0.05} // Height based on data
+        hexBinAltitude={d => d.sumWeight * 0.05}
         hexTransitionDuration={1000}
         
         // Pins
@@ -152,8 +166,7 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
         pointLng="lng"
         pointColor="color"
         pointAltitude="alt"
-        pointRadius={0.5}
-        pointsMerge={true}
+        pointRadius={isMobile ? 0.8 : 0.5} // Larger pins on mobile
         pointLabel="name"
         
         // Satellites (Objects)
@@ -165,7 +178,7 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
         objectThreeObject={d => {
           const color = d.type === 'Station' ? 0xfacc15 : 0xa855f7;
           return new THREE.Mesh(
-            new THREE.SphereGeometry(d.type === 'Station' ? 1.5 : 0.8),
+            new THREE.SphereGeometry(d.type === 'Station' ? (isMobile ? 2.5 : 1.5) : (isMobile ? 1.5 : 0.8)),
             new THREE.MeshLambertMaterial({ color })
           );
         }}
@@ -177,14 +190,14 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
         pathPointLng={p => p[1]}
         pathPointAlt={p => p[2]}
         pathColor="color"
-        pathStroke={2} 
+        pathStroke={isMobile ? 1 : 2} 
         pathDashLength={0.5}
         pathDashGap={0.2}
         pathDashAnimateTime={12000}
         
         // Auto-rotate
         autoRotate={true}
-        autoRotateSpeed={0.5}
+        autoRotateSpeed={isMobile ? 0.2 : 0.5} // Slower on mobile
         
         // Interaction
         onPointClick={(point) => {
@@ -193,7 +206,7 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
               globeEl.current.pointOfView({
                 lat: point.lat,
                 lng: point.lng,
-                altitude: 1.5
+                altitude: isMobile ? 2.5 : 1.5 // Zoom out more on mobile
               }, 1000);
             } catch (err) {
               console.error("Click move error:", err);
@@ -207,7 +220,11 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
           setTimeout(() => {
              if (globeEl.current && typeof globeEl.current.pointOfView === 'function') {
                try {
-                 globeEl.current.pointOfView({ lat: 15, lng: 10, altitude: 2.5 });
+                 globeEl.current.pointOfView({ 
+                   lat: 15, 
+                   lng: 10, 
+                   altitude: isMobile ? 3.5 : 2.5 // Start zoomed out on mobile
+                 });
                } catch (e) { console.error(e); }
              }
           }, 500);
