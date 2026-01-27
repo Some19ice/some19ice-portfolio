@@ -111,6 +111,18 @@ const ProjectCard = ({ project }) => {
                     )}
                 </div>
 
+                {/* Key Stats Grid - NEW */}
+                {project.stats && (
+                    <div className="grid grid-cols-3 gap-2 py-2">
+                        {Object.entries(project.stats).map(([key, value], idx) => (
+                            <div key={idx} className="bg-muted/30 p-1.5 rounded-lg text-center border border-border/30">
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{key}</div>
+                                <div className="text-xs font-bold text-foreground truncate" title={value}>{value}</div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                 {/* Footer */}
                 <div className="pt-4 border-t border-border/50 flex items-center justify-between">
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">

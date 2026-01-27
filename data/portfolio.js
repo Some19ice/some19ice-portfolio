@@ -8,7 +8,12 @@ const portfolioProjects = [
         technologies: ["Next.js", "Server Actions", "OGC WMS/WFS", "MapLibre"],
         demoUrl: "https://ngdi-metadata-portal.vercel.app/", // Assuming a Vercel deployment exists or will exist, or leaving as # if unknown. User only gave git links. I will leave demoUrl as # for now as user didn't provide them.
         codeUrl: "https://github.com/Some19ice/ngdi-metadata-portal",
-        category: "GIS"
+        category: "GIS",
+        stats: {
+            users: "50+ Agencies",
+            impact: "National Scale",
+            tech: "OGC Standards"
+        }
     },
     {
         id: 2,
@@ -19,7 +24,12 @@ const portfolioProjects = [
         technologies: ["Mapbox GL JS", "GSAP", "NetworkX", "Shapely"],
         demoUrl: null,
         codeUrl: "https://github.com/codeinpython2024/NasrdaNavi",
-        category: "GIS"
+        category: "GIS",
+        stats: {
+            routing: "Graph-Based",
+            features: "Voice AI",
+            view: "3D Campus"
+        }
     },
     {
         id: 3,
@@ -30,7 +40,12 @@ const portfolioProjects = [
         technologies: ["React", "Clerk (RBAC)", "Shadcn UI", "Recharts"],
         demoUrl: null,
         codeUrl: "https://github.com/Some19ice/station-stock-manager",
-        category: "Full Stack"
+        category: "Full Stack",
+        stats: {
+            growth: "400% Revenue",
+            scale: "₦15M → ₦100M",
+            users: "High Volume"
+        }
     },
     {
         id: 4,
@@ -41,7 +56,12 @@ const portfolioProjects = [
         technologies: ["Next.js", "Python (FastAPI)", "Google Earth Engine", "PostGIS", "Leaflet"],
         demoUrl: "https://flooding-cholera.vercel.app",
         codeUrl: "https://github.com/Some19ice/flooding-cholera",
-        category: "Full Stack"
+        category: "Full Stack",
+        stats: {
+            data: "Real-time Sat",
+            model: "Risk Analysis",
+            coverage: "Multi-State"
+        }
     }
 ];
 
