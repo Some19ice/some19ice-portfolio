@@ -189,7 +189,7 @@ export default function Home() {
             >
                 {/* Background: Living Globe */}
                 <div className="fixed inset-0 z-0">
-                    <LivingGlobe targetLocation={globeTarget} />
+                    <LivingGlobe targetLocation={globeTarget} onGlobeReady={() => {}} />
                 </div>
 
                 <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
