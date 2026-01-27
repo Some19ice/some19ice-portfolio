@@ -56,7 +56,14 @@ export default function ChatTerminal({ onCommand }) {
     }
   };
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false); // Default closed on mobile/desktop to prevent overlay
+
+  // Auto-open on desktop only
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth > 768) {
+      setIsOpen(true);
+    }
+  }, []);
 
   return (
     <>
