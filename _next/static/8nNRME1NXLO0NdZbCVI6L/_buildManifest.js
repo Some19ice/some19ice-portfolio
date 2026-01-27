@@ -1,6 +1,6 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "static/chunks/39a198099affc6d8.js"
+    "static/chunks/e5644edda369f31a.js"
   ],
   "/404": [
     "static/chunks/ecc0a8a8409b246d.js"
@@ -9,13 +9,13 @@ self.__BUILD_MANIFEST = {
     "static/chunks/bcb0736d34971cdd.js"
   ],
   "/blog": [
-    "static/chunks/48c7038f528be523.js"
+    "static/chunks/cb0ebe0196fd5a9b.js"
   ],
   "/blog/[slug]": [
-    "static/chunks/a86663f8d4f5a875.js"
+    "static/chunks/ed4f3d1e062564e6.js"
   ],
   "/projects/[slug]": [
-    "static/chunks/9ced4c5357127a1e.js"
+    "static/chunks/382485c22e09aebb.js"
   ],
   "/theme-demo": [
     "static/chunks/c06a6a9d8a87d8d7.js"
