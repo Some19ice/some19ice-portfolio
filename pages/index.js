@@ -50,6 +50,7 @@ export default function Home() {
     const overviewRightRef = useRef(null)
     const servicesRef = useRef(null)
     const portfolioRef = useRef(null)
+    const mainRef = useRef(null)
 
     useEffect(() => {
         setMounted(true)
