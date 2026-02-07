@@ -13,7 +13,10 @@
 /out/
 
 # production
+/build
 
+# agent config
+.agent/
 
 # misc
 .DS_Store
