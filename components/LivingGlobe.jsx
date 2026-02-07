@@ -127,13 +127,14 @@ export default function LivingGlobe({ onGlobeReady, targetLocation, activeLayer 
     }
   }, [targetLocation]);
 
-  if (!mounted) return null;
-
+  // Hex bin color for flood/cholera layers (must be before early return to maintain hook order)
   const hexBinColor = useMemo(() => {
     if (activeLayer === 'flood') return d => `rgba(249, 115, 22, ${d.sumWeight * 0.15})`; 
     if (activeLayer === 'cholera') return d => `rgba(239, 68, 68, ${d.sumWeight * 0.15})`;
     return 'rgba(0,0,0,0)';
   }, [activeLayer]);
+
+  if (!mounted) return null;
 
   // Mobile Fallback: Render a lighter version or static image if WebGL is too heavy?
   // For now, let's optimize the Globe props for mobile.
