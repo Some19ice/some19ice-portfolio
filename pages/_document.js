@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html>
+    <Html lang="en">
       <Head>
         {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://opengraph.githubassets.com" />
@@ -30,7 +30,7 @@ export default function Document() {
           }}
         />
       </Head>
-      <body className="font-poppins">
+      <body className="font-sans">
         <Main />
         <NextScript />
       </body>
