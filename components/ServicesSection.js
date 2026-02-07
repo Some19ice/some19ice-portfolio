@@ -1,6 +1,28 @@
 import { Badge } from "@/components/ui/badge"
 import DashboardCard from "./DashboardCard"
 
+// Static color class maps to ensure Tailwind JIT detects them
+const colorClasses = {
+    primary: {
+        bg: "bg-primary/10",
+        text: "text-primary",
+        border: "border-primary/20",
+        hoverShadow: "hover:shadow-primary/5",
+    },
+    secondary: {
+        bg: "bg-secondary/10",
+        text: "text-secondary",
+        border: "border-secondary/20",
+        hoverShadow: "hover:shadow-secondary/5",
+    },
+    accent: {
+        bg: "bg-accent/10",
+        text: "text-accent",
+        border: "border-accent/20",
+        hoverShadow: "hover:shadow-accent/5",
+    },
+}
+
 const services = [
     {
         title: "UI/UX Design",
@@ -48,33 +70,36 @@ export default function ServicesSection({ servicesRef }) {
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {services.map((s) => (
-                        <DashboardCard
-                            key={s.title}
-                            title={s.title}
-                            description={s.description}
-                            className={`group hover:shadow-lg hover:shadow-${s.color}/5 transition-all duration-300`}
-                        >
-                            <div className="flex items-center space-x-4 mb-4">
-                                <div className={`w-12 h-12 bg-${s.color}/10 rounded-lg flex items-center justify-center`}>
-                                    <svg className={`w-6 h-6 text-${s.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={s.icon} />
-                                    </svg>
+                    {services.map((s) => {
+                        const colors = colorClasses[s.color] || colorClasses.primary
+                        return (
+                            <DashboardCard
+                                key={s.title}
+                                title={s.title}
+                                description={s.description}
+                                className={`group hover:shadow-lg ${colors.hoverShadow} transition-all duration-300`}
+                            >
+                                <div className="flex items-center space-x-4 mb-4">
+                                    <div className={`w-12 h-12 ${colors.bg} rounded-lg flex items-center justify-center`}>
+                                        <svg className={`w-6 h-6 ${colors.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={s.icon} />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-foreground">{s.subtitle}</h3>
+                                        <p className="text-sm text-muted-foreground">{s.description}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="font-semibold text-foreground">{s.subtitle}</h3>
-                                    <p className="text-sm text-muted-foreground">{s.description}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {s.tools.map((tool) => (
+                                        <Badge key={tool} variant="secondary" className={`text-xs ${colors.bg} ${colors.text} ${colors.border}`}>
+                                            {tool}
+                                        </Badge>
+                                    ))}
                                 </div>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {s.tools.map((tool) => (
-                                    <Badge key={tool} variant="secondary" className={`text-xs bg-${s.color}/10 text-${s.color} border-${s.color}/20`}>
-                                        {tool}
-                                    </Badge>
-                                ))}
-                            </div>
-                        </DashboardCard>
-                    ))}
+                            </DashboardCard>
+                        )
+                    })}
                 </div>
             </div>
         </section>

@@ -1,6 +1,9 @@
 import { generateResponse } from '../../lib/gemini';
 import portfolioProjects from '../../data/portfolio';
 
+// Check if API key is configured
+const isConfigured = !!process.env.GOOGLE_API_KEY;
+
 const SYSTEM_PROMPT = `
 You are the "Orbital Command" AI for Yakubu T. Umar's portfolio. 
 Your role is to guide visitors through his geospatial and full-stack projects.
@@ -9,16 +12,16 @@ You control a 3D globe interface.
 User Details:
 - Name: Yakubu T. Umar
 - Role: Senior Full Stack Engineer & Geospatial Specialist
-- Resume URL: /resume.pdf (Provide this markdown link when asked for CV/Resume: [Download Resume](/resume.pdf))
+- Resume URL: https://drive.google.com/file/d/1JPwwhDbywhn3-F-N-UHsa3dq6BV0ynic/view?usp=drive_link (Provide this link when asked for CV/Resume: [Download Resume](https://drive.google.com/file/d/1JPwwhDbywhn3-F-N-UHsa3dq6BV0ynic/view?usp=drive_link))
 
 Here are the projects in the portfolio:
 ${JSON.stringify(portfolioProjects.map(p => ({
   title: p.title,
   desc: p.description,
   tech: p.technologies,
-  location: p.title.includes('NGDI') || p.title.includes('Navi') ? 'Abuja' : 
-           p.title.includes('Flood') ? 'Cross River' : 
-           p.title.includes('Station') ? 'Lagos' : 'Nigeria' 
+  location: p.title.includes('NGDI') || p.title.includes('Navi') ? 'Abuja' :
+    p.title.includes('Flood') ? 'Cross River' :
+      p.title.includes('Station') ? 'Lagos' : 'Nigeria'
 })), null, 2)}
 
 When a user asks a question, you must analyze if it relates to a specific location or project.
@@ -55,15 +58,23 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
+  // Return a helpful message if API key isn't configured
+  if (!isConfigured) {
+    return res.status(200).json({
+      text: "Orbital Command is currently offline. The GOOGLE_API_KEY environment variable is not configured. Check the `.env.example` file for setup instructions.",
+      action: null
+    });
+  }
+
   const { message } = req.body;
 
   try {
     const prompt = `${SYSTEM_PROMPT}\n\nUser: ${message}\nResponse:`;
     const text = await generateResponse(prompt);
-    
+
     // Clean up markdown code blocks if Gemini adds them
     const cleanText = text.replace(/```json\n|\n```/g, '').trim();
-    
+
     try {
       const data = JSON.parse(cleanText);
       res.status(200).json(data);

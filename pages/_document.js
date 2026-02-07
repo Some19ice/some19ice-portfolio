@@ -2,14 +2,20 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-      <Html>
-          <Head>
-              {/* Preconnect to external domains for faster resource loading */}
-              <link rel="preconnect" href="https://opengraph.githubassets.com" />
-              <link rel="dns-prefetch" href="https://api.github.com" />
-              <script
-                  dangerouslySetInnerHTML={{
-                      __html: `
+    <Html>
+      <Head>
+        {/* Preconnect to external domains for faster resource loading */}
+        <link rel="preconnect" href="https://opengraph.githubassets.com" />
+        <link rel="dns-prefetch" href="https://api.github.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
                         (function() {
                           try {
                             var localValue = localStorage.getItem('darkMode');
@@ -21,13 +27,13 @@ export default function Document() {
                           } catch (e) {}
                         })();
                       `,
-                  }}
-              />
-          </Head>
-          <body className="font-poppins">
-              <Main />
-              <NextScript />
-          </body>
-      </Html>
+          }}
+        />
+      </Head>
+      <body className="font-poppins">
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
   )
 }

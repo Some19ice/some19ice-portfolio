@@ -1,6 +1,7 @@
 import Head from "next/head"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import useDarkMode from "../lib/useDarkMode"
 import { BsFillMoonStarsFill } from "react-icons/bs"
 import { AiFillGithub, AiOutlineLinkedin, AiOutlineTwitter } from "react-icons/ai"
 import config from "../config"
@@ -115,27 +116,8 @@ const faqs = [
 ]
 
 export default function HirePage() {
-    const [darkMode, setDarkMode] = useState(true)
-    const [mounted, setMounted] = useState(false)
+    const { darkMode, setDarkMode } = useDarkMode()
     const [openFaq, setOpenFaq] = useState(null)
-
-    useEffect(() => {
-        setMounted(true)
-        if (typeof window !== "undefined") {
-            const isDark = document.documentElement.classList.contains("dark")
-            setDarkMode(isDark)
-        }
-    }, [])
-
-    useEffect(() => {
-        if (!mounted) return
-        if (darkMode) {
-            document.documentElement.classList.add("dark")
-        } else {
-            document.documentElement.classList.remove("dark")
-        }
-        localStorage.setItem("darkMode", String(darkMode))
-    }, [darkMode, mounted])
 
     return (
         <div className="min-h-screen bg-background transition-colors duration-300">
@@ -162,8 +144,8 @@ export default function HirePage() {
                         </Link>
 
                         <div className="flex items-center space-x-4">
-                            <Link 
-                                href="/" 
+                            <Link
+                                href="/"
                                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 ← Back to Portfolio
@@ -194,16 +176,16 @@ export default function HirePage() {
                             <div className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
                             <span className="text-sm text-secondary font-medium">Available for new projects</span>
                         </div>
-                        
+
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
                             Let's Build Something{" "}
                             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                                 Great Together
                             </span>
                         </h1>
-                        
+
                         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-                            7+ years building geospatial systems, full-stack applications, and enterprise software. 
+                            7+ years building geospatial systems, full-stack applications, and enterprise software.
                             From national-scale data portals to inventory systems that drive 400% revenue growth.
                         </p>
 
@@ -230,13 +212,12 @@ export default function HirePage() {
 
                     <div className="grid md:grid-cols-3 gap-6">
                         {packages.map((pkg) => (
-                            <div 
+                            <div
                                 key={pkg.id}
-                                className={`relative p-6 rounded-2xl border transition-all hover:scale-[1.02] ${
-                                    pkg.highlight 
-                                        ? "bg-gradient-to-b from-primary/10 to-card border-primary/30 shadow-lg shadow-primary/10" 
+                                className={`relative p-6 rounded-2xl border transition-all hover:scale-[1.02] ${pkg.highlight
+                                        ? "bg-gradient-to-b from-primary/10 to-card border-primary/30 shadow-lg shadow-primary/10"
                                         : "bg-card border-border/50"
-                                }`}
+                                    }`}
                             >
                                 {pkg.highlight && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
@@ -244,9 +225,8 @@ export default function HirePage() {
                                     </div>
                                 )}
 
-                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                                    pkg.highlight ? "bg-primary/20 text-primary" : "bg-muted/30 text-muted-foreground"
-                                }`}>
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${pkg.highlight ? "bg-primary/20 text-primary" : "bg-muted/30 text-muted-foreground"
+                                    }`}>
                                     {pkg.icon}
                                 </div>
 
@@ -277,11 +257,10 @@ export default function HirePage() {
 
                                 <a
                                     href={`mailto:${config.contactEmail}?subject=Inquiry: ${pkg.name}`}
-                                    className={`block w-full text-center py-2.5 rounded-lg font-medium transition-colors ${
-                                        pkg.highlight
+                                    className={`block w-full text-center py-2.5 rounded-lg font-medium transition-colors ${pkg.highlight
                                             ? "bg-primary text-primary-foreground hover:bg-primary/90"
                                             : "bg-muted/50 text-foreground hover:bg-muted"
-                                    }`}
+                                        }`}
                                 >
                                     Get Started
                                 </a>
@@ -307,9 +286,9 @@ export default function HirePage() {
                                         </svg>
                                     ))}
                                 </div>
-                                
+
                                 <p className="text-foreground/90 mb-4 italic">"{t.quote}"</p>
-                                
+
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <p className="font-medium text-foreground">{t.author}</p>
@@ -338,10 +317,10 @@ export default function HirePage() {
                                     className="w-full flex items-center justify-between p-4 text-left bg-card hover:bg-card/80 transition-colors"
                                 >
                                     <span className="font-medium text-foreground">{faq.q}</span>
-                                    <svg 
-                                        className={`w-5 h-5 text-muted-foreground transition-transform ${openFaq === i ? "rotate-180" : ""}`} 
-                                        fill="none" 
-                                        stroke="currentColor" 
+                                    <svg
+                                        className={`w-5 h-5 text-muted-foreground transition-transform ${openFaq === i ? "rotate-180" : ""}`}
+                                        fill="none"
+                                        stroke="currentColor"
                                         viewBox="0 0 24 24"
                                     >
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

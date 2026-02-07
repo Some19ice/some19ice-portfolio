@@ -1,6 +1,7 @@
 import Head from "next/head"
 import dynamic from "next/dynamic"
-import { useEffect, useState, useRef } from "react"
+import { useRef, useState } from "react"
+import useDarkMode from "../lib/useDarkMode"
 import { Canvas } from "@react-three/fiber"
 import { View } from "@react-three/drei"
 
@@ -31,8 +32,7 @@ const LivingGlobe = dynamic(() => import("../components/LivingGlobe"), { ssr: fa
 const ChatTerminal = dynamic(() => import("../components/ChatTerminal"), { ssr: false })
 
 export default function Home() {
-    const [darkMode, setDarkMode] = useState(true)
-    const [mounted, setMounted] = useState(false)
+    const { darkMode, setDarkMode } = useDarkMode()
     const [globeTarget, setGlobeTarget] = useState(null)
     const [activeLayer, setActiveLayer] = useState(null)
 
@@ -51,27 +51,6 @@ export default function Home() {
     const servicesRef = useRef(null)
     const portfolioRef = useRef(null)
     const mainRef = useRef(null)
-
-    useEffect(() => {
-        setMounted(true)
-        // Initialize state based on what _document.js set
-        // This prevents the "flash" of wrong theme because we accept the DOM's state
-        if (typeof window !== "undefined") {
-            const isDark = document.documentElement.classList.contains("dark")
-            setDarkMode(isDark)
-        }
-    }, [])
-
-    useEffect(() => {
-        if (!mounted) return
-
-        if (darkMode) {
-            document.documentElement.classList.add("dark")
-        } else {
-            document.documentElement.classList.remove("dark")
-        }
-        localStorage.setItem("darkMode", String(darkMode))
-    }, [darkMode, mounted])
 
     // Generate structured data for SEO
     const structuredData = {
@@ -165,7 +144,7 @@ export default function Home() {
                 />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://some19ice.github.io/some19ice-portfolio" />
-                <meta property="og:image" content="/web1.png" />
+                <meta property="og:image" content="https://some19ice.github.io/some19ice-portfolio/web1.png" />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta
                     name="twitter:title"
@@ -175,7 +154,7 @@ export default function Home() {
                     name="twitter:description"
                     content="Senior Scientific Officer specializing in Geospatial Information Systems (GIS), Next.js, national-scale data portals, and 3D navigation systems."
                 />
-                <meta name="twitter:image" content="/web1.png" />
+                <meta name="twitter:image" content="https://some19ice.github.io/some19ice-portfolio/web1.png" />
 
                 {/* Structured Data */}
                 <script
@@ -202,10 +181,10 @@ export default function Home() {
                 {/* Background: Living Globe */}
                 <div className="fixed inset-0 z-0">
                     <ErrorBoundary>
-                        <LivingGlobe 
-                            targetLocation={globeTarget} 
+                        <LivingGlobe
+                            targetLocation={globeTarget}
                             activeLayer={activeLayer}
-                            onGlobeReady={() => {}} 
+                            onGlobeReady={() => { }}
                         />
                     </ErrorBoundary>
                 </div>
@@ -258,6 +237,22 @@ export default function Home() {
                 <ErrorBoundary>
                     <ChatTerminal onCommand={handleCommand} />
                 </ErrorBoundary>
+
+                {/* Footer */}
+                <footer className="relative z-10 border-t border-border/50 bg-background/95 backdrop-blur-md">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                            <p className="text-sm text-muted-foreground">
+                                © {new Date().getFullYear()} Yakubu T. Umar. All rights reserved.
+                            </p>
+                            <div className="flex items-center gap-4">
+                                <a href="https://github.com/some19ice" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors text-sm">GitHub</a>
+                                <a href="https://linkedin.com/in/some19ice" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors text-sm">LinkedIn</a>
+                                <a href="https://twitter.com/some19ice" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Twitter</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </main>
         </div>
     )
