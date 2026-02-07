@@ -76,7 +76,6 @@ export default function ServicesSection({ servicesRef }) {
                             <DashboardCard
                                 key={s.title}
                                 title={s.title}
-                                description={s.description}
                                 className={`group hover:shadow-lg ${colors.hoverShadow} transition-all duration-300`}
                             >
                                 <div className="flex items-center space-x-4 mb-4">
