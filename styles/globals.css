@@ -22,22 +22,27 @@ a {
 * {
   box-sizing: border-box;
 }
+
 @font-face {
   font-family: "burtons";
   src: url("../public/Burtons.otf");
 }
+
 @font-face {
   font-family: "operatorMono";
   src: url("../public/OperatorMono-BoldItalic.otf");
 }
+
 @font-face {
   font-family: "operatorMonoBold";
   src: url("../public/OperatorMono-Bold.otf");
 }
+
 @font-face {
   font-family: "operatorMonoBook";
   src: url("../public/OperatorMono-Book.otf");
 }
+
 @font-face {
   font-family: "operatorMonoMedium";
   src: url("../public/OperatorMono-Medium.otf");
@@ -144,6 +149,7 @@ a {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -190,7 +196,7 @@ a {
   line-height: 1.7;
 }
 
-.prose :not(pre) > code {
+.prose :not(pre)>code {
   @apply px-1.5 py-0.5 rounded text-accent border;
   background-color: hsl(var(--accent) / 0.1);
   border-color: hsl(var(--accent) / 0.2);
@@ -198,7 +204,8 @@ a {
 }
 
 /* Improve list styling in code blocks */
-.prose ul, .prose ol {
+.prose ul,
+.prose ol {
   @apply my-4;
 }
 
@@ -225,7 +232,10 @@ a {
 }
 
 /* Improve heading spacing */
-.prose h1, .prose h2, .prose h3, .prose h4 {
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
   @apply mt-8 mb-4 font-bold;
 }
 
@@ -260,3 +270,25 @@ a {
   @apply my-8 border-border;
 }
 
+/* Chat message entrance animation */
+@keyframes chatMessageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-message-enter {
+  animation: chatMessageEnter 0.25s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-message-enter {
+    animation: none;
+  }
+}
