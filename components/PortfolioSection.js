@@ -115,7 +115,7 @@ export default function PortfolioSection({ portfolioRef }) {
                         Projects I&apos;ve Built
                     </h2>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        From national-scale data portals to 3D navigation systems — 
+                        From national-scale data portals to 3D navigation systems —
                         here&apos;s a selection of my recent work
                     </p>
                 </div>
@@ -147,11 +147,10 @@ export default function PortfolioSection({ portfolioRef }) {
                                         strokeLinejoin="round"
                                         strokeWidth={2}
                                         d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                                    </svg>
-                                </a>
-                            </Button>
-                        </div>
+                                    />
+                                </svg>
+                            </a>
+                        </Button>
                     </div>
 
                     {/* Compact Filters */}
@@ -208,11 +207,10 @@ export default function PortfolioSection({ portfolioRef }) {
                                 <Badge
                                     key={cat}
                                     variant={selectedCategory === cat ? "default" : "outline"}
-                                    className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
-                                        selectedCategory === cat 
-                                            ? "bg-primary text-primary-foreground" 
-                                            : "hover:bg-primary/10 hover:text-primary hover:border-primary/30"
-                                    }`}
+                                    className={`cursor-pointer transition-all duration-300 hover:scale-105 ${selectedCategory === cat
+                                        ? "bg-primary text-primary-foreground"
+                                        : "hover:bg-primary/10 hover:text-primary hover:border-primary/30"
+                                        }`}
                                     onClick={() => setSelectedCategory(cat)}
                                     role="button"
                                     tabIndex={0}
@@ -226,6 +224,7 @@ export default function PortfolioSection({ portfolioRef }) {
                             ))}
                         </div>
                     </div>
+                </div>
 
                 {/* Results Grid */}
                 {displayProjects.length > 0 ? (

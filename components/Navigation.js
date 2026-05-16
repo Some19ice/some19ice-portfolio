@@ -1,17 +1,20 @@
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { AiFillGithub } from "react-icons/ai"
 import { BsFillMoonStarsFill } from "react-icons/bs"
 import config from "../config"
 
-const NavLink = ({ href, icon, label, active }) => {
-    const isExternal = href.startsWith("#")
-    const className = `flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-        active
+const NavLink = ({ href, icon, label, active, highlight = false, onClick = undefined }) => {
+    const isHash = href.startsWith("#")
+    const className = highlight
+        ? "flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-primary text-primary-foreground hover:bg-primary/90"
+        : `flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 ${active
             ? "text-primary bg-primary/10 border border-primary/20"
             : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-    }`
+        }`
 
-    if (isExternal) {
+    if (isHash) {
         return (
             <a
                 href={href}
@@ -23,6 +26,7 @@ const NavLink = ({ href, icon, label, active }) => {
                     e.preventDefault()
                     const element = document.querySelector(href)
                     element?.scrollIntoView({ behavior: "smooth" })
+                    if (onClick) onClick()
                 }}
             >
                 {icon}
@@ -37,6 +41,7 @@ const NavLink = ({ href, icon, label, active }) => {
             aria-label={`${label}${active ? " (current page)" : ""}`}
             aria-current={active ? "page" : undefined}
             role="menuitem"
+            onClick={onClick}
         >
             {icon}
             {label}
@@ -151,9 +156,90 @@ const navItems = [
             </svg>
         ),
     },
+    {
+        href: "/hire",
+        label: "Hire Me",
+        icon: (
+            <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+            </svg>
+        ),
+        highlight: true,
+    },
 ]
 
+// Section IDs that correspond to hash nav items (for scroll-spy)
+const sectionIds = ["overview", "services", "portfolio", "contact"]
+
 export default function Navigation({ darkMode, setDarkMode }) {
+    const router = useRouter()
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [activeSection, setActiveSection] = useState("overview")
+    const [isMac, setIsMac] = useState(false)
+
+    // Detect platform for keyboard shortcut display
+    useEffect(() => {
+        if (typeof navigator !== "undefined") {
+            setIsMac(navigator.platform?.toUpperCase().includes("MAC") || navigator.userAgent?.includes("Mac"))
+        }
+    }, [])
+
+    // Close mobile menu on route change
+    useEffect(() => {
+        setMobileMenuOpen(false)
+    }, [router.asPath])
+
+    // Scroll-spy: observe which section is in view
+    useEffect(() => {
+        if (router.pathname !== "/") return
+
+        const observerCallback = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id)
+                }
+            })
+        }
+
+        const observer = new IntersectionObserver(observerCallback, {
+            rootMargin: "-20% 0px -60% 0px",
+            threshold: 0,
+        })
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id)
+            if (el) observer.observe(el)
+        })
+
+        return () => observer.disconnect()
+    }, [router.pathname])
+
+    // Determine if a nav item is active
+    const isActive = useCallback(
+        (item) => {
+            if (item.href.startsWith("#")) {
+                return router.pathname === "/" && activeSection === item.href.slice(1)
+            }
+            return router.pathname === item.href
+        },
+        [router.pathname, activeSection]
+    )
+
+    const closeMobileMenu = useCallback(() => {
+        setMobileMenuOpen(false)
+    }, [])
+
     return (
         <nav
             className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50"
@@ -183,8 +269,8 @@ export default function Navigation({ darkMode, setDarkMode }) {
                             className="hidden md:flex items-center space-x-6 text-sm"
                             role="menubar"
                         >
-                            {navItems.map((item, i) => (
-                                <NavLink key={item.href} {...item} active={i === 0} />
+                            {navItems.map((item) => (
+                                <NavLink key={item.href} {...item} active={isActive(item)} />
                             ))}
                         </div>
                     </div>
@@ -199,15 +285,38 @@ export default function Navigation({ darkMode, setDarkMode }) {
                             <span className="text-xs text-secondary font-medium">Available</span>
                         </div>
 
+                        {/* Command Palette Trigger */}
+                        <button
+                            onClick={() => {
+                                const event = new KeyboardEvent('keydown', {
+                                    key: 'k',
+                                    metaKey: true,
+                                    bubbles: true
+                                });
+                                window.dispatchEvent(event);
+                            }}
+                            className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-card/50 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:bg-card transition-colors"
+                            aria-label="Open command palette"
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <span className="text-xs">Search</span>
+                            <kbd className="ml-1 px-1.5 py-0.5 text-[10px] bg-muted/50 rounded border border-border/50">
+                                {isMac ? "⌘" : "Ctrl+"}K
+                            </kbd>
+                        </button>
+
                         <div className="hidden lg:block w-px h-6 bg-border/50" />
 
                         <div className="flex items-center space-x-2">
                             <a
                                 href={config.resumeUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="p-2 rounded-lg bg-card/50 hover:bg-card transition-colors border border-border/50 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                                 aria-label="View resume"
                                 title="Download Resume"
-                                rel="noopener noreferrer"
                             >
                                 <svg
                                     className="w-4 h-4"
@@ -258,42 +367,66 @@ export default function Navigation({ darkMode, setDarkMode }) {
                             </button>
                         </div>
 
-                        {/* Mobile Menu */}
+                        {/* Mobile Menu Toggle */}
                         <button
                             className="md:hidden p-2 rounded-lg bg-card/50 hover:bg-card transition-colors border border-border/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
                             aria-label="Toggle mobile menu"
-                            aria-expanded="false"
+                            aria-expanded={mobileMenuOpen}
                             aria-controls="mobile-menu"
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
-                            <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
+                            {mobileMenuOpen ? (
+                                <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            ) : (
+                                <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                </svg>
+                            )}
                         </button>
                     </div>
                 </div>
 
                 {/* Mobile Navigation */}
-                <div
-                    id="mobile-menu"
-                    className="md:hidden border-t border-border/50 py-4"
-                    role="menu"
-                >
-                    <div className="flex flex-col space-y-2">
-                        {navItems.map((item, i) => (
-                            <NavLink key={item.href} {...item} active={i === 0} />
-                        ))}
+                {mobileMenuOpen && (
+                    <div
+                        id="mobile-menu"
+                        className="md:hidden border-t border-border/50 py-4 animate-in slide-in-from-top-2 duration-200"
+                        role="menu"
+                    >
+                        <div className="flex flex-col space-y-2">
+                            {navItems.map((item) => (
+                                <NavLink
+                                    key={item.href}
+                                    {...item}
+                                    active={isActive(item)}
+                                    onClick={closeMobileMenu}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </nav>
     )

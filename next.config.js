@@ -5,8 +5,8 @@ const nextConfig = {
     // React configuration
     reactStrictMode: true,
 
-    // Silence Turbopack warning (use Turbopack by default in Next 16)
-    turbopack: {},
+    // Disable Turbopack (WASM fallback doesn't support it)
+    // turbopack: {},
 
     // Performance optimizations
     experimental: {
@@ -30,8 +30,8 @@ const nextConfig = {
         formats: ["image/webp", "image/avif"],
     },
 
-    // Static export configuration for GitHub Pages (disabled on Vercel to allow API routes)
-    output: process.env.VERCEL ? undefined : "export",
+    // Static export configuration for GitHub Pages (disabled on Vercel and in dev to allow API routes)
+    output: process.env.VERCEL || !isProd ? undefined : "export",
 
     // Compiler optimizations
     compiler: {
