@@ -203,6 +203,21 @@ export default function HeroSection({ overviewLeftRef, overviewRightRef }) {
                             <div className="absolute bottom-1/4 -right-4 p-2 px-3 bg-secondary/10 backdrop-blur-sm rounded-full border border-secondary/20 shadow-lg">
                                 <span className="text-xs font-medium text-secondary">Next.js</span>
                             </div>
+
+                            {/* AI Badge */}
+                            <div className="absolute top-12 left-8 p-2 px-3 bg-accent/10 backdrop-blur-sm rounded-full border border-accent/20 shadow-lg flex items-center gap-1.5">
+                                <svg className="w-3 h-3 text-accent" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                                <span className="text-xs font-medium text-accent">AI</span>
+                            </div>
+
+                            {/* Map icon badge */}
+                            <div className="absolute bottom-8 right-8 p-2.5 bg-chart-1/10 backdrop-blur-sm rounded-xl border border-chart-1/20 shadow-lg">
+                                <svg className="w-5 h-5 text-chart-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>

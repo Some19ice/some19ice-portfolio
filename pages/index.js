@@ -1,15 +1,15 @@
 import Head from "next/head"
 import dynamic from "next/dynamic"
-import { useEffect, useState, useRef } from "react"
+import { useRef, useState, useCallback } from "react"
 import { Canvas } from "@react-three/fiber"
 import { View } from "@react-three/drei"
 
-import ErrorBoundary from "../components/ErrorBoundary"
 import Navigation from "../components/Navigation"
 import HeroSection from "../components/HeroSection"
 import ServicesSection from "../components/ServicesSection"
 import PortfolioSection from "../components/PortfolioSection"
 import ContactSection from "../components/ContactSection"
+import ErrorBoundary from "../components/ErrorBoundary"
 import {
     HeroSeparator,
     ServicesSeparator,
@@ -17,6 +17,7 @@ import {
     ContactSeparator,
 } from "../components/SectionSeparator"
 import portfolioProjects from "../data/portfolio"
+import useDarkMode from "../lib/useDarkMode"
 
 const CircuitLines = dynamic(
     () => import("../components/AnimatedLines").then((mod) => ({ default: mod.CircuitLines })),
@@ -26,52 +27,34 @@ const RadarSweep = dynamic(
     () => import("../components/AnimatedLines").then((mod) => ({ default: mod.RadarSweep })),
     { ssr: false }
 )
-// Globe Components
 const LivingGlobe = dynamic(() => import("../components/LivingGlobe"), { ssr: false })
 const ChatTerminal = dynamic(() => import("../components/ChatTerminal"), { ssr: false })
 
 export default function Home() {
-    const [darkMode, setDarkMode] = useState(true)
-    const [mounted, setMounted] = useState(false)
+    const { darkMode, setDarkMode } = useDarkMode()
     const [globeTarget, setGlobeTarget] = useState(null)
     const [activeLayer, setActiveLayer] = useState(null)
 
-    const handleCommand = (action) => {
-        if (action.lat && action.lng) {
-            setGlobeTarget({ lat: action.lat, lng: action.lng, altitude: action.altitude })
+    const handleCommand = useCallback((action) => {
+        if (Number.isFinite(action?.lat) && Number.isFinite(action?.lng)) {
+            setGlobeTarget({
+                lat: action.lat,
+                lng: action.lng,
+                altitude: action.altitude || 1.5,
+            })
         }
-        if (action.layer) {
+        if (action?.layer) {
             setActiveLayer(action.layer)
         } else {
-            setActiveLayer(null) // Reset layer if none specified
+            setActiveLayer(null)
         }
-    }
+    }, [])
+
+    const mainRef = useRef(null)
     const overviewLeftRef = useRef(null)
     const overviewRightRef = useRef(null)
     const servicesRef = useRef(null)
     const portfolioRef = useRef(null)
-    const mainRef = useRef(null)
-
-    useEffect(() => {
-        setMounted(true)
-        // Initialize state based on what _document.js set
-        // This prevents the "flash" of wrong theme because we accept the DOM's state
-        if (typeof window !== "undefined") {
-            const isDark = document.documentElement.classList.contains("dark")
-            setDarkMode(isDark)
-        }
-    }, [])
-
-    useEffect(() => {
-        if (!mounted) return
-
-        if (darkMode) {
-            document.documentElement.classList.add("dark")
-        } else {
-            document.documentElement.classList.remove("dark")
-        }
-        localStorage.setItem("darkMode", String(darkMode))
-    }, [darkMode, mounted])
 
     // Generate structured data for SEO
     const structuredData = {
@@ -85,7 +68,7 @@ export default function Home() {
         image: "https://some19ice.github.io/some19ice-portfolio/avatar.png",
         sameAs: [
             "https://github.com/Some19ice",
-            "https://linkedin.com/in/some19ice",
+            "https://linkedin.com/in/yakubu-umar",
             "https://twitter.com/some19ice",
         ],
         knowsAbout: [
@@ -101,6 +84,10 @@ export default function Home() {
         worksFor: {
             "@type": "Organization",
             name: "National Space Research and Development Agency (NASRDA)",
+        },
+        alumniOf: {
+            "@type": "EducationalOrganization",
+            name: "Federal University of Technology, Minna",
         },
         offers: {
             "@type": "Offer",
@@ -202,13 +189,28 @@ export default function Home() {
                 {/* Background: Living Globe */}
                 <div className="fixed inset-0 z-0">
                     <ErrorBoundary>
-                        <LivingGlobe 
-                            targetLocation={globeTarget} 
+                        <LivingGlobe
+                            targetLocation={globeTarget}
                             activeLayer={activeLayer}
-                            onGlobeReady={() => {}} 
+                            onGlobeReady={() => {}}
                         />
                     </ErrorBoundary>
                 </div>
+                <Canvas
+                    eventSource={mainRef}
+                    className="fixed inset-0 pointer-events-none z-0"
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        pointerEvents: "none",
+                        zIndex: 0,
+                    }}
+                >
+                    <View.Port />
+                </Canvas>
 
                 <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
                 <HeroSeparator />
@@ -223,7 +225,7 @@ export default function Home() {
                 <ContactSeparator />
                 <ContactSection />
 
-                {/* 3D Effects (Overlays) */}
+                {/* 3D Effects */}
                 <Canvas
                     className="fixed inset-0 pointer-events-none z-0"
                     eventSource={mainRef}

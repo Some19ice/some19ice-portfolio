@@ -84,6 +84,9 @@ const config = {
 }
 ```
 
+### Orbital Command Chat
+The chat terminal is static-export safe by default and uses built-in portfolio responses on GitHub Pages. To connect it to the server API on a server-capable deployment, set `NEXT_PUBLIC_CHAT_ENDPOINT=/api/chat` and configure `HERMES_API_URL` plus `HERMES_API_KEY` in the deployment environment.
+
 ### Adding Projects
 Projects can be added in two ways:
 1.  **GitHub**: Add the repository name to `selectedRepos` in `config.js`.

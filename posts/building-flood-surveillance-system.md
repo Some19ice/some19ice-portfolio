@@ -111,18 +111,18 @@ Here's how we determine which health facilities are in danger zones using PostGI
 
 ```sql
 -- Find health facilities within 1km of detected flood zones
-SELECT 
-    hf.name, 
+SELECT
+    hf.name,
     hf.type,
     lga.name as lga
-FROM 
+FROM
     health_facilities hf
-JOIN 
+JOIN
     lgas lga ON hf.lga_id = lga.id
-WHERE 
+WHERE
     ST_DWithin(
-        hf.location, 
-        ST_GeomFromGeoJSON(:flood_polygon_json), 
+        hf.location,
+        ST_GeomFromGeoJSON(:flood_polygon_json),
         1000 -- meters
     );
 ```
@@ -147,7 +147,7 @@ Users needed to understand the map at a glance.
 // Choropleth coloring logic
 function getStyle(riskLevel: string) {
   return {
-    fillColor: riskLevel === 'high' ? '#ef4444' : 
+    fillColor: riskLevel === 'high' ? '#ef4444' :
                riskLevel === 'medium' ? '#eab308' : '#22c55e',
     weight: 2,
     opacity: 1,

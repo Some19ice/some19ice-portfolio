@@ -13,11 +13,11 @@ This upgrade transforms the static portfolio into an immersive **Geospatial Comm
 **User Experience:**
 1.  **Initial View:** Slow-rotating Earth with day/night cycles and real-time cloud layers.
 2.  **Project Pins:** Glowing pulsars mark project locations (e.g., Abuja for NGDI, Cross River for Flood Dashboard).
-3.  **Interaction:** 
+3.  **Interaction:**
     - Hovering a pin pauses rotation and shows a tooltip.
     - Clicking a pin triggers a **camera swoop** (smooth transition) down to the location.
     - A "Project Card" overlay appears with details and links.
-4.  **Data Layers (Eye Candy):** 
+4.  **Data Layers (Eye Candy):**
     - Real-time satellite tracks (TLE data) orbiting the globe.
     - Subtle hex-grid overlay to signify "Data/Tech".
 
@@ -52,7 +52,7 @@ graph TD
 
     %% Main Nodes
     User["Visitor"]:::user -->|Interacts| FE["Frontend (Next.js)"]:::frontend
-    
+
     %% Frontend Subgraph
     subgraph FrontendLayer ["Frontend Layer"]
         direction TB
@@ -61,17 +61,17 @@ graph TD
         Globe -->|Visualizes| Pins["Project Pins"]:::frontend
         Globe -->|Visualizes| Layers["GIS Overlays"]:::frontend
     end
-    
+
     %% Backend Subgraph
     subgraph BackendLayer ["Backend Layer (Python/FastAPI)"]
         direction TB
         Chat -->|Sends Prompt| Agent["AI Agent Orchestrator"]:::backend
         Agent -->|Decides Action| Tools["Tool Registry"]:::backend
-        
+
         Tools -->|Query| GEE["Google Earth Engine"]:::data
         Tools -->|Query| DB[("PostGIS DB")]:::data
         Tools -->|Query| Portfolio["Portfolio Data JSON"]:::data
-        
+
         GEE -->|Returns Tiles| FE
         Agent -->|Returns Response + ViewState| FE
     end
