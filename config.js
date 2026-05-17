@@ -13,9 +13,8 @@ const config = {
         // Curated repos to feature from your profile
         selectedRepos: [
             "ngdi-metadata-portal",
-            "zael-codes",
-            "ngdi-metadata-tool-v1",
-            "thepresslodge",
+            "station-stock-manager",
+            "NasrdaNavi",
         ],
         // Disable topic-based discovery; use the curated list above
         useTopics: false,

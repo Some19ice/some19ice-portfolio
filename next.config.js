@@ -30,8 +30,8 @@ const nextConfig = {
         formats: ["image/webp", "image/avif"],
     },
 
-    // Static export configuration for GitHub Pages
-    output: "export",
+    // Static export configuration for GitHub Pages (disabled on Vercel to allow API routes)
+    output: process.env.VERCEL ? undefined : "export",
 
     // Compiler optimizations
     compiler: {

@@ -90,7 +90,7 @@ export default function HeroSection({ overviewLeftRef, overviewRightRef }) {
                         
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
                             I build{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">
+                            <span className="text-primary">
                                 geospatial systems
                             </span>{" "}
                             that make sense of complex data
