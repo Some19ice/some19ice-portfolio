@@ -36,7 +36,7 @@ export default function Home() {
     const [activeLayer, setActiveLayer] = useState(null)
 
     const handleCommand = useCallback((action) => {
-        if (action?.lat && action?.lng) {
+        if (Number.isFinite(action?.lat) && Number.isFinite(action?.lng)) {
             setGlobeTarget({
                 lat: action.lat,
                 lng: action.lng,
